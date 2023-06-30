@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 976127990}
   - component: {fileID: 976127991}
-  - component: {fileID: 1682124523592373036}
-  - component: {fileID: 7076594073880210477}
+  - component: {fileID: 5540234544344163507}
+  - component: {fileID: 5368400290430193638}
   m_Layer: 0
   m_Name: Item In Hand
   m_TagString: Untagged
@@ -86,33 +86,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1682124523592373036
+--- !u!114 &5540234544344163507
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976127989}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d84e5ca072c82264d8a087409d0d7cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 976127991}
-  photonView: {fileID: 6342263695188701971}
---- !u!114 &7076594073880210477
+  currentSpriteName: 
+--- !u!114 &5368400290430193638
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976127989}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88549879ab61db04a96fe03e5944c2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteView: {fileID: 1682124523592373036}
+  spriteView: {fileID: 5540234544344163507}
   photonView: {fileID: 6342263695188701971}
 --- !u!1 &6342263693763871322
 GameObject:
@@ -294,7 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6342263694384304359}
   - component: {fileID: 6342263694384304358}
-  - component: {fileID: 6342263694384304353}
+  - component: {fileID: 6776070429937073075}
   m_Layer: 0
   m_Name: PlayerModel
   m_TagString: Untagged
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movingObject: {fileID: 0}
---- !u!114 &6342263694384304353
+--- !u!114 &6776070429937073075
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -346,7 +346,7 @@ MonoBehaviour:
   m_SynchronizePosition: 0
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 1
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!1 &6342263694567259198
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,7 +719,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6342263695171302224
 Transform:
   m_ObjectHideFlags: 0
@@ -831,7 +831,7 @@ GameObject:
   - component: {fileID: 6342263695188701969}
   - component: {fileID: 6342263695188701968}
   - component: {fileID: 6342263695188701971}
-  - component: {fileID: 6342263695188701970}
+  - component: {fileID: 3275651151009556630}
   - component: {fileID: 6342263695188701981}
   - component: {fileID: 6342263695188701980}
   - component: {fileID: 6342263695188701983}
@@ -916,13 +916,13 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: 6342263695188701970}
-  - {fileID: 6342263694384304353}
-  - {fileID: 1682124523592373036}
+  - {fileID: 3275651151009556630}
+  - {fileID: 6776070429937073075}
+  - {fileID: 5540234544344163507}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &6342263695188701970
+--- !u!114 &3275651151009556630
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -937,7 +937,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!114 &6342263695188701981
 MonoBehaviour:
   m_ObjectHideFlags: 0

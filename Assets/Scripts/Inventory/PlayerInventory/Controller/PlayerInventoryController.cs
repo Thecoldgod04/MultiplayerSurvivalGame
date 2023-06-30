@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Photon.Pun;
 
-public class PlayerInventoryController : MonoBehaviour
+public class PlayerInventoryController : MonoBehaviourPun
 {
+    public static PlayerInventoryController instance;
+
     [Header("UI Elements")]
     [SerializeField]
     private List<Image> iconList;
+
     [SerializeField]
     private List<TextMeshProUGUI> amountTextList;
+
     [SerializeField]
     private Transform selectionFrame;
 
@@ -26,11 +31,17 @@ public class PlayerInventoryController : MonoBehaviour
 
     private void Start()
     {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this.gameObject);
+
         if (iconList.Count != amountTextList.Count)
         {
             Debug.LogError(transform.name + ": iconList.Count or amountTextList.Count or inventoryDatabase.GetItemList().Count does not equal!");
             return;
         }
+
         UpdateInventoryUI();
     }
 
@@ -47,6 +58,8 @@ public class PlayerInventoryController : MonoBehaviour
 
     public void UpdateSelection()
     {
+        //if (photonView.IsMine == false) return;
+
         float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
 
         if (scrollDelta > 0f)   //scroll up
@@ -68,12 +81,14 @@ public class PlayerInventoryController : MonoBehaviour
 
     private void Update()
     {
-        UpdateSelection();  
+        UpdateSelection();
     }
 
     //Event handling
+
     public void OnItemCollected(ItemStack itemStack)
     {
+        //if (photonView.IsMine == false) return;
         //DatabaseItemStack databaseItemStack = new DatabaseItemStack { itemStack = itemStack };
 
         //Update database
@@ -86,6 +101,4 @@ public class PlayerInventoryController : MonoBehaviour
         
         amountTextList[indexOfAddedItem].text = inventoryDatabase.Get(indexOfAddedItem).amount.ToString();
     }
-
-    
 }

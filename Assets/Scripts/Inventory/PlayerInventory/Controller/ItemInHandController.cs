@@ -5,8 +5,7 @@ using Photon.Pun;
 
 public class ItemInHandController : MonoBehaviour
 {
-    /*[SerializeField]
-    private SpriteRenderer itemInHandRenderer;*/
+    //public static ItemInHandController instance;
 
     [SerializeField]
     private SpriteView spriteView;
@@ -14,14 +13,21 @@ public class ItemInHandController : MonoBehaviour
     [SerializeField]
     private PhotonView photonView;
 
-    // Update is called once per frame
+
+    private void Start()
+    {
+        
+    }
     void Update()
     {
-        if (photonView.IsMine == false)
+        if(PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
         {
-            //Debug.LogError(transform.name + ": photonView.IsMine == false");
-            return;
+            if (photonView.IsMine == false) return;
+            spriteView.ChangeSprite(PlayerInventoryController.itemInHandSprite);
         }
-        spriteView.ChangeSprite(PlayerInventoryController.itemInHandSprite);
+        else
+        {
+            spriteView.ChangeSprite(PlayerInventoryController.itemInHandSprite);
+        }
     }
 }

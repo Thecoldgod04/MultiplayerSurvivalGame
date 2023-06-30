@@ -787,7 +787,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 249.99997, y: 149.99998}
+  m_AnchoredPosition: {x: -100, y: -25}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &427849877
@@ -1562,6 +1562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 766607905}
   - component: {fileID: 766607906}
+  - component: {fileID: 766607907}
   m_Layer: 0
   m_Name: UI Manager
   m_TagString: Untagged
@@ -1597,6 +1598,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsingUI: 0
+--- !u!114 &766607907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766607904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 3
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &830847467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2564,6 +2587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 910877092}
   - component: {fileID: 910877093}
+  - component: {fileID: 910877094}
   m_Layer: 0
   m_Name: Player Inventory Manager
   m_TagString: Untagged
@@ -2617,6 +2641,28 @@ MonoBehaviour:
   selectionFrame: {fileID: 1788424139}
   currentSelection: 0
   inventoryDatabase: {fileID: 11400000, guid: 3c74c4dcb6308d04ca5eda0612c00a2d, type: 2}
+--- !u!114 &910877094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 910877091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &961365014
 GameObject:
   m_ObjectHideFlags: 0
@@ -3677,6 +3723,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1202083107}
   - component: {fileID: 1202083108}
+  - component: {fileID: 1202083109}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -3712,6 +3759,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 6342263695188701982, guid: fe34c1ce0a542c94799abcd018a048f2, type: 3}
+--- !u!114 &1202083109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202083106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1237522552
 GameObject:
   m_ObjectHideFlags: 0
