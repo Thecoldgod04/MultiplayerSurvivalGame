@@ -13,6 +13,7 @@ public class Lobby : MonoBehaviourPunCallbacks
     {
         worldNameTextField.text = "Room1";
 
+        //PhotonNetwork.SerializationRate = 5;
         PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.ConnectUsingSettings();
     }

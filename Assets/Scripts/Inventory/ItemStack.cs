@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 [System.Serializable]
-public class ItemStack : MonoBehaviour
+public class ItemStack : MonoBehaviourPun
 {
     [SerializeField]
     private ItemMeta itemMeta;
@@ -54,7 +55,18 @@ public class ItemStack : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            inventoryController.OnItemCollected(this);
+            if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
+            {
+                if (collision.GetComponent<PhotonView>().IsMine == true)
+                {
+                    inventoryController.OnItemCollected(this);
+                }
+            }
+            else
+            {
+                inventoryController.OnItemCollected(this);
+            }
+            Destroy(this.gameObject);
         }
     }
 }

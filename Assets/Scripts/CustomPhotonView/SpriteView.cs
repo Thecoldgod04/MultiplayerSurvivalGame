@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class SpriteView : MonoBehaviour, IPunObservable
+public class SpriteView : MonoBehaviourPun, IPunObservable
 {
     [SerializeField]
     private SpriteRenderer spriteRenderer;
 
     [SerializeField]
-    private PhotonView photonView;
-
     private string currentSpriteName;
 
     // Start is called before the first frame update
@@ -35,20 +33,32 @@ public class SpriteView : MonoBehaviour, IPunObservable
         if (stream.IsWriting)
         {
             //if (photonView.IsMine == false) return;
-            Debug.LogError(photonView.ViewID + ": Is Writing");
-            /*if (spriteRenderer.sprite == null) return;
-            stream.SendNext(spriteRenderer.sprite.name);*/
-            //Debug.LogError(photonView.ViewID + ": hello");
+
+            if (spriteRenderer.sprite == null)
+            {
+                stream.SendNext("");
+                //Debug.LogError(photonView.ViewID + ": tell the fake client to not display anything");
+            }
+            else
+            {
+                stream.SendNext(spriteRenderer.sprite.name);
+                //Debug.LogError(photonView.ViewID + ": tell the fake client to display the sprite: " + spriteRenderer.sprite.name);
+            }
         }
         else if(stream.IsReading)
         {
             //if (photonView.IsMine == false) return;
-            Debug.LogError(photonView.ViewID + ": Is Reading");
-            /*if (stream.ReceiveNext() != null || (string)stream.ReceiveNext() != "")
-            {
-                currentSpriteName = (string)stream.ReceiveNext();
+            //Debug.LogError(photonView.ViewID + ": Is Reading");
+
+            object receivedData = stream.ReceiveNext();
+            //if ((string)receivedData == "") return;
+            currentSpriteName = (string)receivedData;
+            if (currentSpriteName == "")
+                spriteRenderer.sprite = null;
+            else
                 spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + currentSpriteName);
-            }*/
+
+            //Debug.LogError(photonView.ViewID + ": The client over there tells me to display sprite named: " + currentSpriteName);
         }
     }
 
