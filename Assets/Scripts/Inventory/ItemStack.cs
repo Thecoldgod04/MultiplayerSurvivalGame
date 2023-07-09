@@ -22,7 +22,7 @@ public class ItemStack : MonoBehaviourPun
 
     private void Start()
     {
-        spriteRenderer.sprite = itemMeta.GetIcon();
+        spriteRenderer.sprite = itemMeta.GetSprite();
     }
 
     public void SetItemMeta(ItemMeta itemMeta)

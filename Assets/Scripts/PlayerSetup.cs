@@ -22,5 +22,6 @@ public class PlayerSetup : MonoBehaviourPun
 
         if (photonView.ViewID != 0 && !photonView.IsMine) return;
         playerCamera.SetActive(true);
+        playerCamera.tag = "MainCamera";
     }
 }
