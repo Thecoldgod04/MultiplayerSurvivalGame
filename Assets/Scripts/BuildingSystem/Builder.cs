@@ -71,27 +71,29 @@ public class Builder : MonoBehaviourPun
     }
 
     bool cancel = false;
+    Vector3 buildPosition = new Vector3();
     private void BuildInputCheck()
     {
         if (Camera.main == null) return;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (IsHoldingBuildable() == false || IsInRange(mousePos) == false)
+        if (IsHoldingBuildable() == false)
         {
             CancelAction();
             return;
         }
 
-        if(Input.GetMouseButtonDown(1)) //Right click
+        if(Input.GetMouseButtonDown(1) && IsInRange(mousePos) == true && (buildTimer == null || buildTimer.coolDown <= 0)) //Right click
         {
+            buildPosition = buildCursor.position;
             buildTimer = StartCooldown(buildTime);
             cancel = false;
         }
         if ((buildTimer != null && buildTimer.signal == false) || buildTimer == null || cancel == true) return;
 
         if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
-            RequestBuild(buildCursor.position, currentBuildable.GetId());
+            RequestBuild(buildPosition, currentBuildable.GetId());
         else
-            photonView.RPC("RequestBuild", RpcTarget.All, buildCursor.position, currentBuildable.GetId());
+            photonView.RPC("RequestBuild", RpcTarget.All, buildPosition, currentBuildable.GetId());
         buildTimer = null;
     }
 
