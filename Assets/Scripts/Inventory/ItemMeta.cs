@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Itemmeta", menuName = "Itemmeta")]
+[CreateAssetMenu(fileName = "New ItemMeta", menuName = "ItemMeta")]
 public class ItemMeta : ScriptableObject
 {
-    private static int staticId;
-
     [SerializeField]
     private int id;
 
@@ -16,7 +14,12 @@ public class ItemMeta : ScriptableObject
     public static int maxAmount = 12;
 
     [SerializeField]
-    private Sprite icon;
+    private Sprite sprite;
+
+    public virtual void Init(int id)
+    {
+        this.id = id;
+    }
 
     public void SetName(string name)
     {
@@ -33,9 +36,9 @@ public class ItemMeta : ScriptableObject
         return id;
     }
 
-    public Sprite GetIcon()
+    public Sprite GetSprite()
     {
-        return icon;
+        return sprite;
     }
 
     public int GetMaxAmount()

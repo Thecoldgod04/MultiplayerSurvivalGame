@@ -23,11 +23,17 @@ public class ItemInHandController : MonoBehaviour
         if(PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
         {
             if (photonView.IsMine == false) return;
-            spriteView.ChangeSprite(PlayerInventoryController.itemInHandSprite);
+            if (PlayerInventoryController.itemInHand == null) return;
+            spriteView.ChangeSprite(PlayerInventoryController.itemInHand.GetSprite());
         }
         else
         {
-            spriteView.ChangeSprite(PlayerInventoryController.itemInHandSprite);
+            if (PlayerInventoryController.itemInHand == null)
+            {
+                spriteView.ChangeSprite(null);
+                return;
+            }
+            spriteView.ChangeSprite(PlayerInventoryController.itemInHand.GetSprite());
         }
     }
 }
