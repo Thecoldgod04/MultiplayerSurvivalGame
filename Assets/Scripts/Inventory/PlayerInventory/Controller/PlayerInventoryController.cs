@@ -19,7 +19,7 @@ public class PlayerInventoryController : MonoBehaviourPun
     [SerializeField]
     private Transform selectionFrame;
 
-    public static Sprite itemInHandSprite;
+    public static ItemMeta itemInHand { get; private set; }
 
     [Header("Controller")]
     [SerializeField]
@@ -50,7 +50,7 @@ public class PlayerInventoryController : MonoBehaviourPun
         int i = 0;
         foreach(DataBaseItemStack db in inventoryDatabase.GetItemList())
         {
-            iconList[i].sprite = db.itemMeta.GetIcon(); iconList[i].color = Color.white;
+            iconList[i].sprite = db.itemMeta.GetSprite(); iconList[i].color = Color.white;
             amountTextList[i].text = db.amount.ToString();
             i++;
         }
@@ -76,7 +76,15 @@ public class PlayerInventoryController : MonoBehaviourPun
         }
 
         selectionFrame.position = iconList[currentSelection].transform.position;
-        itemInHandSprite = iconList[currentSelection].sprite;
+
+        if (inventoryDatabase.GetItemList().Count == 0 ||
+            inventoryDatabase.GetItemList().Count-1 < currentSelection ||
+            inventoryDatabase.GetItemList()[currentSelection] == null)
+        {
+            itemInHand = null;
+            return;
+        }
+        itemInHand = inventoryDatabase.GetItemList()[currentSelection].itemMeta;
     }
 
     private void Update()
@@ -95,7 +103,7 @@ public class PlayerInventoryController : MonoBehaviourPun
         int indexOfAddedItem = inventoryDatabase.Add(itemStack);
 
         //Update UI
-        iconList[indexOfAddedItem].sprite = inventoryDatabase.Get(indexOfAddedItem).itemMeta.GetIcon(); 
+        iconList[indexOfAddedItem].sprite = inventoryDatabase.Get(indexOfAddedItem).itemMeta.GetSprite(); 
         iconList[indexOfAddedItem].color = Color.white;
         iconList[indexOfAddedItem].color = new Color(1f, 1f, 1f, 1f);
         

@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - BuildCursor
   layers:
   - Default
   - TransparentFX
@@ -43,4 +44,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 944879989
+    locked: 0
+  - name: BuildCursor
+    uniqueID: 436996763
     locked: 0

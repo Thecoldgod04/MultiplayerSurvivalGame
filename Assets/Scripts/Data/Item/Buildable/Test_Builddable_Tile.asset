@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3f3744f4165249b0b840b77e747b6, type: 3}
+  m_Name: Test_Builddable_Tile
+  m_EditorClassIdentifier: 
+  id: 1
+  itemName: Test Tile
+  sprite: {fileID: 21300000, guid: 0c7e25232c2cd2a459c469a17bc6e1ae, type: 3}
+  <tile>k__BackingField: {fileID: 11400000, guid: 27ac3f77572ec2f4cb1d65b29a6e3ff4, type: 2}
