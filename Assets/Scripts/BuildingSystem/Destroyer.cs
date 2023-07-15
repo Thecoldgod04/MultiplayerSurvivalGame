@@ -24,6 +24,7 @@ public class Destroyer : MonoBehaviourPun
         if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined ||
            photonView.IsMine == true)
         {
+            if (UIManager.instance.IsUsingUI()) return;
             DestroyInputCheck();
         }
     }
