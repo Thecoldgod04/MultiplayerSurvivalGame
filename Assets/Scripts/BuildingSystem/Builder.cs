@@ -41,6 +41,7 @@ public class Builder : MonoBehaviourPun
         if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined ||
            photonView.IsMine == true)
         {
+            if (UIManager.instance.IsUsingUI()) return;
             UpdateBuildCursor();
             BuildInputCheck();
         }

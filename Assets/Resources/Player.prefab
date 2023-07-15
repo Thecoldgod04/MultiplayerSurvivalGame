@@ -290,6 +290,8 @@ GameObject:
   - component: {fileID: 4526093229964035180}
   - component: {fileID: 4144618042502247719}
   - component: {fileID: 1823121906597957467}
+  - component: {fileID: 7182016091354727393}
+  - component: {fileID: 5832605270180433092}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -312,6 +314,7 @@ Transform:
   - {fileID: 6349475138996742038}
   - {fileID: 6389156632943013445}
   - {fileID: 243962611817040812}
+  - {fileID: 2041433200632855092}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -346,7 +349,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -465,6 +468,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   constructionLayer: {fileID: 0}
+--- !u!114 &7182016091354727393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741161038441132241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7674351318d2e9248a3c0633d4f4d993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <health>k__BackingField: 10
+  <maxHealth>k__BackingField: 10
+  <triggerTag>k__BackingField: 
+--- !u!114 &5832605270180433092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741161038441132241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e54df45f2cf2344923aa112a6faff9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healAmount: 1
+  healKey: 32
+  <triggerDamageTag>k__BackingField: 
 --- !u!1 &4750885163463128764
 GameObject:
   m_ObjectHideFlags: 0
@@ -961,7 +994,7 @@ GameObject:
   - component: {fileID: 1656426941936650385}
   - component: {fileID: 1775786942515178947}
   m_Layer: 0
-  m_Name: PlayerModel
+  m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1012,3 +1045,34 @@ MonoBehaviour:
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 1
   m_UseLocal: 0
+--- !u!1 &6775402244413290611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2041433200632855092}
+  m_Layer: 0
+  m_Name: Physics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2041433200632855092
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6775402244413290611}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1628379604175938677}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
