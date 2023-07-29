@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06f83c7fd23605842ae0cad89a341f21, type: 3}
-  m_Name: TestItemMeta
+  m_Name: Pickaxe_Item
   m_EditorClassIdentifier: 
   id: 0
-  itemName: Test Item
-  sprite: {fileID: 21300000, guid: 28b333c047dbcbb4f9fd16473ce5870d, type: 3}
+  itemName: Pickaxe
+  maxAmount: 12
+  sprite: {fileID: 21300000, guid: 965faaf67c3a8fa458fa40a9160397fd, type: 3}

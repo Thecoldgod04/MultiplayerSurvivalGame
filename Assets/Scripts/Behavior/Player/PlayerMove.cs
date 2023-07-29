@@ -22,11 +22,22 @@ public class PlayerMove : MonoBehaviourPun, IMovement
     // Update is called once per frame
     void Update()
     {
+        //UpdateInput();
+    }
+
+    public void UpdateInput()
+    {
         if (photonView.ViewID != 0 && !photonView.IsMine || UIManager.instance.IsUsingUI()) return;
 
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
 
-        flipBehavior.DoFlipByInput(xInput);
+        //flipBehavior.DoFlipByInput(xInput);
+    }
+
+    public void Stop()
+    {
+        xInput = 0;
+        yInput = 0;
     }
 }

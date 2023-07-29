@@ -13,6 +13,8 @@ public class ItemInHandController : MonoBehaviour
     [SerializeField]
     private PhotonView photonView;
 
+    public Sprite test;
+
 
     private void Start()
     {
@@ -23,8 +25,13 @@ public class ItemInHandController : MonoBehaviour
         if(PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
         {
             if (photonView.IsMine == false) return;
-            if (PlayerInventoryController.itemInHand == null) return;
+            if (PlayerInventoryController.itemInHand == null)
+            {
+                spriteView.ChangeSprite(null);
+                return;
+            }
             spriteView.ChangeSprite(PlayerInventoryController.itemInHand.GetSprite());
+            test = PlayerInventoryController.itemInHand.GetSprite();
         }
         else
         {
