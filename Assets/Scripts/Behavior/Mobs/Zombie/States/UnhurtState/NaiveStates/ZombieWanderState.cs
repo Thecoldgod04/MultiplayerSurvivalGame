@@ -39,7 +39,7 @@ public class ZombieWanderState : IZomebieState
         }
     }
 
-    public void ResetState()
+    public void ResetState(ZombieStateMachine stateMachine)
     {
         
     }

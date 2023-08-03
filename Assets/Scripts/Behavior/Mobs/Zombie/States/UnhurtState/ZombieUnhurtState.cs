@@ -4,12 +4,13 @@ using UnityEngine;
 using Photon.Pun;
 
 [System.Serializable]
-public class ZombieNaiveState : IZomebieState
+public class ZombieUnhurtState : IZomebieState
 {
-
+    [SerializeField]
+    bool test;
     public virtual void DoStateFixedUpdate(ZombieStateMachine stateMachine)
     {
-
+        throw new System.NotImplementedException();
     }
 
     public virtual void DoStateUpdate(ZombieStateMachine stateMachine)
@@ -19,14 +20,16 @@ public class ZombieNaiveState : IZomebieState
             return;
         }
 
-        if (Physics2D.OverlapCircle(stateMachine.transform.position, stateMachine.detectRange, LayerMask.GetMask("Player")))
+        if (stateMachine.GetIsDamaged() == true)
         {
-            stateMachine.SetState(stateMachine.chaseState);
+            Debug.LogError("AAA");
+            stateMachine.SetIsDamaged(false);
+            stateMachine.SetState(stateMachine.hurtState);
         }
     }
 
-    public void ResetState()
+    public virtual void ResetState(ZombieStateMachine stateMachine)
     {
-        
+        throw new System.NotImplementedException();
     }
 }

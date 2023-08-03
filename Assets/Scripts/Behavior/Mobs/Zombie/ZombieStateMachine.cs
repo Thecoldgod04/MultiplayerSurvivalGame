@@ -9,6 +9,12 @@ public class ZombieStateMachine : MonoBehaviour
 
     #region States
     [field: SerializeField]
+    public ZombieUnhurtState unhurtState { get; private set; }
+
+    [field: SerializeField]
+    public ZombieHurtState hurtState { get; private set; }
+
+    [field: SerializeField]
     public ZombieNaiveState naiveState { get; private set; }
 
     [field: SerializeField]
@@ -34,9 +40,23 @@ public class ZombieStateMachine : MonoBehaviour
     [field: SerializeField]
     public float chaseRange { get; private set; }
 
+    [field: SerializeField]
+    public float attackRange { get; private set; }
+
+    [field: SerializeField]
+    public Rigidbody2D rb { get; private set; }
+
+    [field: SerializeField]
+    private PlayerSetup playerTarget;
+
+    [field: SerializeField]
+    private bool isDamaged;
+
     // Start is called before the first frame update
     void Start()
     {
+        unhurtState = new ZombieUnhurtState();
+        hurtState = new ZombieHurtState();
         naiveState = new ZombieNaiveState();
         idleState = new ZombieIdleState();
         chaseState = new ZombieChaseState();
@@ -46,6 +66,9 @@ public class ZombieStateMachine : MonoBehaviour
         /*flipBehavior = GetComponentInChildren<Flip>();*/
         wanderMoveInput = GetComponent<WanderMove>();
         followTargetMoveInput = GetComponent<FollowTargetMove>();
+
+        rb = GetComponent<Rigidbody2D>();
+        playerTarget = null;
 
         currentState = idleState;
     }
@@ -78,5 +101,25 @@ public class ZombieStateMachine : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, chaseRange);
+    }
+
+    public void SetIsDamaged(bool isDamaged)
+    {
+        this.isDamaged = isDamaged;
+    }
+
+    public bool GetIsDamaged()
+    {
+        return isDamaged;
+    }
+
+    public void SetPlayerTarget(PlayerSetup player)
+    {
+        this.playerTarget = player;
+    }
+
+    public PlayerSetup GetPlayerTarget()
+    {
+        return playerTarget;
     }
 }

@@ -36,7 +36,15 @@ public class ConstructionLayer : TilemapLayer
             worldCoord.z = -0.1f;
             gameObject = Instantiate(buildableMeta.gameObject, worldCoord, Quaternion.identity);
         }
-        tilemap.SetTile(cellCoords, buildableMeta.tile);
+
+        TileChangeData tileChangeData = new TileChangeData(
+            cellCoords,
+            buildableMeta.tile,
+            Color.white,
+            Matrix4x4.Translate(new Vector3(0, 0.5f, 0))
+            );
+        //tilemap.SetTile(cellCoords, buildableMeta.tile);
+        tilemap.SetTile(tileChangeData, false);
 
         BuildableObject buildableObject = new BuildableObject(buildableMeta, gameObject);
 

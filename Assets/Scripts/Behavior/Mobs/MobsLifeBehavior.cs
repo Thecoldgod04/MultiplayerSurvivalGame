@@ -8,7 +8,8 @@ public class MobsLifeBehavior : MonoBehaviour, ILife
 
     public int Heal()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
+        return 0;
     }
 
     // Start is called before the first frame update

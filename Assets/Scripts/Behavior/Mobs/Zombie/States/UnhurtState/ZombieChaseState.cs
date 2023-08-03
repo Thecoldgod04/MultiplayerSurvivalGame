@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 
 [System.Serializable]
-public class ZombieChaseState : IZomebieState
+public class ZombieChaseState : ZombieUnhurtState
 {
     [SerializeField]
     float giveUpTime = 2f;
@@ -14,25 +14,27 @@ public class ZombieChaseState : IZomebieState
 
     bool targetLocked = false;
 
-    public void DoStateFixedUpdate(ZombieStateMachine stateMachine)
+    public override void DoStateFixedUpdate(ZombieStateMachine stateMachine)
     {
         stateMachine.movementBehavior.ApplyVelocity();
     }
 
-    public void DoStateUpdate(ZombieStateMachine stateMachine)
+    public override void DoStateUpdate(ZombieStateMachine stateMachine)
     {
+        base.DoStateUpdate(stateMachine);
+
         if (PhotonNetwork.IsMasterClient != true && PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
         {
             return;
         }
 
-        if(targetLocked == false)
+        if(targetLocked == false || stateMachine.GetComponent<FollowTargetMove>().GetTarget() == null)
         {
+            ResetState(stateMachine);
             PlayerSetup[] targets = GameObject.FindObjectsOfType<PlayerSetup>();
-            foreach (PlayerSetup player in targets)
-            {
-                targetPlayer = FindClosestPlayer(targets, stateMachine);
-            }
+            
+            targetPlayer = FindClosestPlayer(targets, stateMachine);
+
             stateMachine.movementBehavior.SetMoveInput(stateMachine.GetComponent<FollowTargetMove>());
             stateMachine.GetComponent<FollowTargetMove>().SetTarget(targetPlayer);
             targetLocked = true;
@@ -46,7 +48,8 @@ public class ZombieChaseState : IZomebieState
             giveUpTime -= Time.deltaTime;
             if(giveUpTime <= 0)
             {
-                ResetState();
+                ResetState(stateMachine);
+                //stateMachine.SetPlayerTarget(null);
                 stateMachine.SetState(stateMachine.idleState);
             }
         }
@@ -65,13 +68,13 @@ public class ZombieChaseState : IZomebieState
             {
                 closestDistance = distance;
                 closestTransform = t.transform;
+                stateMachine.SetPlayerTarget(t);
             }
         }
-
         return closestTransform;
     }
 
-    public void ResetState()
+    public override void ResetState(ZombieStateMachine stateMachine)
     {
         giveUpTime = 2f;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FollowTargetMove : MonoBehaviour, IMovement
 {
     [SerializeField]
-    protected Transform target;
+    private Transform target;
 
     public float xInput { get; private set; }
 
@@ -26,5 +26,10 @@ public class FollowTargetMove : MonoBehaviour, IMovement
     public void SetTarget(Transform target)
     {
         this.target = target;
+    }
+
+    public Transform GetTarget()
+    {
+        return this.target;
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class SpriteView : MonoBehaviourPun, IPunObservable
 {
@@ -9,14 +10,21 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
     private SpriteRenderer spriteRenderer;
 
     [SerializeField]
+    private Image uiImage;
+
+    [SerializeField]
     private string currentSpriteName;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(GetComponent<SpriteRenderer>() != null)
+        if (GetComponent<SpriteRenderer>() != null)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+        else if(GetComponent<Image>() != null)
+        {
+            uiImage = GetComponent<Image>();
         }
     }
 
@@ -56,7 +64,12 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
             if (currentSpriteName == "")
                 spriteRenderer.sprite = null;
             else
-                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + currentSpriteName);
+            {
+                if(spriteRenderer != null)
+                    spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + currentSpriteName);
+                else if(uiImage != null)
+                    uiImage.sprite = Resources.Load<Sprite>("Sprites/" + currentSpriteName);
+            }
 
             //Debug.LogError(photonView.ViewID + ": The client over there tells me to display sprite named: " + currentSpriteName);
         }
@@ -64,6 +77,9 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
 
     public void ChangeSprite(Sprite newSprite)
     {
+        if (spriteRenderer != null)
             spriteRenderer.sprite = newSprite;
+        else if (uiImage != null)
+            uiImage.sprite = newSprite;
     }
 }

@@ -8,5 +8,5 @@ public interface IZomebieState
 
     public void DoStateFixedUpdate(ZombieStateMachine stateMachine);
 
-    public void ResetState();
+    public void ResetState(ZombieStateMachine stateMachine);
 }
