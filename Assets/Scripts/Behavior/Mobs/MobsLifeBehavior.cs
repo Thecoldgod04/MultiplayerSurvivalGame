@@ -16,6 +16,8 @@ public class MobsLifeBehavior : MonoBehaviour, ILife
     void Awake()
     {
         triggerDamageTag = "Player";
+
+        //triggerDamageTag = "PlayerAttack";
     }
 
     // Update is called once per frame

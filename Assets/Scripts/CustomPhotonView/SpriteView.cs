@@ -41,15 +41,23 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             //if (photonView.IsMine == false) return;
+            if(spriteRenderer == null && uiImage == null)
+            {
+                Logger.LogError("SpriteView", "Missing Sprite Renderer or UI Image!");
+                return;
+            }
 
-            if (spriteRenderer.sprite == null)
+            if ((spriteRenderer != null && spriteRenderer.sprite == null) || (uiImage != null && uiImage.sprite == null))
             {
                 stream.SendNext("");
                 //Debug.LogError(photonView.ViewID + ": tell the fake client to not display anything");
             }
             else
             {
-                stream.SendNext(spriteRenderer.sprite.name);
+                if(uiImage == null)
+                    stream.SendNext(spriteRenderer.sprite.name);
+                else
+                    stream.SendNext(uiImage.sprite.name);
                 //Debug.LogError(photonView.ViewID + ": tell the fake client to display the sprite: " + spriteRenderer.sprite.name);
             }
         }
@@ -62,7 +70,12 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
             //if ((string)receivedData == "") return;
             currentSpriteName = (string)receivedData;
             if (currentSpriteName == "")
-                spriteRenderer.sprite = null;
+            {
+                if(spriteRenderer != null)
+                    spriteRenderer.sprite = null;
+                if(uiImage != null)
+                    uiImage.sprite = null;
+            }
             else
             {
                 if(spriteRenderer != null)

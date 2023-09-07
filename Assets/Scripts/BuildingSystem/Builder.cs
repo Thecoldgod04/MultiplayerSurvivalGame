@@ -24,7 +24,7 @@ public class Builder : MonoBehaviourPun
     private Timer buildTimer = null;
 
 
-    private void Start()
+    private void Awake()
     {
         buildRange = 3;
 
@@ -94,7 +94,7 @@ public class Builder : MonoBehaviourPun
         if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
             RequestBuild(buildPosition, currentBuildable.GetId());
         else
-            photonView.RPC("RequestBuild", RpcTarget.All, buildPosition, currentBuildable.GetId());
+            photonView.RPC("RequestBuild", RpcTarget.AllBuffered, buildPosition, currentBuildable.GetId());
         buildTimer = null;
     }
 
@@ -107,6 +107,7 @@ public class Builder : MonoBehaviourPun
         }
         BuildableMeta buildableMeta = (BuildableMeta)ItemMetaManager.instance.GetItemMetaById(buildableMetaId);
         //Debug.LogError(buildableMeta.GetId());
+
         constructionLayer.Build(pos, buildableMeta);
 
         //constructionLayer.Build(buildCursor.position, currentBuildable);

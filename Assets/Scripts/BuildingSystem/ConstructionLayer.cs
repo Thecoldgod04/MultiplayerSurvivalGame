@@ -19,7 +19,7 @@ public class ConstructionLayer : TilemapLayer
         occupiedList = new Dictionary<Vector3Int, BuildableObject>();
     }
 
-    public UnityEvent  onConstructionBuild, onConstructionDestroy;
+    public UnityEvent onConstructionBuild, onConstructionDestroy;
 
     public void Build(Vector3 coords, BuildableMeta buildableMeta)
     {
@@ -34,7 +34,19 @@ public class ConstructionLayer : TilemapLayer
             worldCoord.x += 0.5f;
             worldCoord.y += 0.5f;
             worldCoord.z = -0.1f;
-            gameObject = Instantiate(buildableMeta.gameObject, worldCoord, Quaternion.identity);
+            //gameObject = Instantiate(buildableMeta.gameObject, worldCoord, Quaternion.identity);
+            GameObject getFromPool = ObjectPool.instance.GetPooledObject(buildableMeta.gameObject);
+            if(getFromPool != null)
+            {
+                gameObject = getFromPool;
+                gameObject.transform.position = worldCoord;
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                gameObject = Instantiate(buildableMeta.gameObject, worldCoord, Quaternion.identity);
+                Debug.LogWarning("Instantiated an object: " + buildableMeta.gameObject);
+            }
         }
 
         TileChangeData tileChangeData = new TileChangeData(
@@ -61,7 +73,8 @@ public class ConstructionLayer : TilemapLayer
         {
             if (occupiedList[cellCoord].realGameObject != null)
             {
-                Destroy(occupiedList[cellCoord].realGameObject);
+                //Destroy(occupiedList[cellCoord].realGameObject);
+                occupiedList[cellCoord].realGameObject.SetActive(false);
             }
 
             Vector3 pos = new Vector3(position.x, position.y, position.z + 1);
@@ -72,6 +85,36 @@ public class ConstructionLayer : TilemapLayer
         occupiedList.Remove(cellCoord);
 
         onConstructionDestroy.Invoke();
+    }
+
+    public void Load(Vector3 position)
+    {
+        Vector3Int cellCoord = tilemap.WorldToCell(position);
+        if (IsEmpty(cellCoord)) return;
+
+        if (occupiedList.ContainsKey(cellCoord))
+        {
+            if (occupiedList[cellCoord].realGameObject != null)
+            {
+                //Destroy(occupiedList[cellCoord].realGameObject);
+                occupiedList[cellCoord].realGameObject.SetActive(true);
+            }
+        }
+    }
+
+    public void Unload(Vector3 position)
+    {
+        Vector3Int cellCoord = tilemap.WorldToCell(position);
+        if (IsEmpty(cellCoord)) return;
+
+        if (occupiedList.ContainsKey(cellCoord))
+        {
+            if (occupiedList[cellCoord].realGameObject != null)
+            {
+                //Destroy(occupiedList[cellCoord].realGameObject);
+                occupiedList[cellCoord].realGameObject.SetActive(false);
+            }
+        }
     }
 
     public bool IsEmpty(Vector3 coords)
@@ -96,6 +139,12 @@ public class ConstructionLayer : TilemapLayer
             dropItem = PhotonNetwork.Instantiate(dropItemTemplate.name, pos, Quaternion.identity);
             dropItem.GetComponent<ItemStack>().photonView.RPC("SetItemMeta", RpcTarget.All, buildableMeta.GetId());
         }
+    }
+
+    public void PlaceTile(TileBase tile, Vector3 pos)
+    {
+        Vector3Int cellCoords = tilemap.WorldToCell(pos);
+        tilemap.SetTile(cellCoords, tile);
     }
 }
 [System.Serializable]
