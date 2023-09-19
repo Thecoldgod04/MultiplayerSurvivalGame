@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.Events;
 
 public class WorldTime : MonoBehaviourPun
 {
@@ -20,8 +21,10 @@ public class WorldTime : MonoBehaviourPun
     private double startTime;
     ExitGames.Client.Photon.Hashtable customValue;
 
+    public UnityEvent onHourPass;
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if (instance == null)
             instance = this;
@@ -44,6 +47,8 @@ public class WorldTime : MonoBehaviourPun
 
     }
 
+    int hourBefore, hourAfter = 0;
+
     // Update is called once per frame
     void Update()
     {
@@ -51,6 +56,13 @@ public class WorldTime : MonoBehaviourPun
             DoTimeCycleOffline();
         else
             DoTimeCycle();
+
+        hourAfter = GetCurrentHour();
+        if(hourBefore != hourAfter)
+        {
+            hourBefore = hourAfter;
+            onHourPass.Invoke();
+        }
     }
 
     private void DoTimeCycle()

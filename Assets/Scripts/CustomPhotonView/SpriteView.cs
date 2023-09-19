@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class SpriteView : MonoBehaviourPun, IPunObservable
 {
@@ -9,14 +10,24 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
     private SpriteRenderer spriteRenderer;
 
     [SerializeField]
+    private Image uiImage;
+
+    [SerializeField]
     private string currentSpriteName;
+
+    [SerializeField]
+    private string defaultSpriteName;
 
     // Start is called before the first frame update
     void Start()
     {
-        if(GetComponent<SpriteRenderer>() != null)
+        if (GetComponent<SpriteRenderer>() != null)
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+        }
+        else if(GetComponent<Image>() != null)
+        {
+            uiImage = GetComponent<Image>();
         }
     }
 
@@ -33,15 +44,23 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             //if (photonView.IsMine == false) return;
+            if(spriteRenderer == null && uiImage == null)
+            {
+                Logger.LogError("SpriteView", "Missing Sprite Renderer or UI Image!");
+                return;
+            }
 
-            if (spriteRenderer.sprite == null)
+            if ((spriteRenderer != null && spriteRenderer.sprite == null) || (uiImage != null && uiImage.sprite == null))
             {
                 stream.SendNext("");
                 //Debug.LogError(photonView.ViewID + ": tell the fake client to not display anything");
             }
             else
             {
-                stream.SendNext(spriteRenderer.sprite.name);
+                if(uiImage == null)
+                    stream.SendNext(spriteRenderer.sprite.name);
+                else
+                    stream.SendNext(uiImage.sprite.name);
                 //Debug.LogError(photonView.ViewID + ": tell the fake client to display the sprite: " + spriteRenderer.sprite.name);
             }
         }
@@ -54,9 +73,19 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
             //if ((string)receivedData == "") return;
             currentSpriteName = (string)receivedData;
             if (currentSpriteName == "")
-                spriteRenderer.sprite = null;
+            {
+                if(spriteRenderer != null)
+                    spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + defaultSpriteName);
+                if(uiImage != null)
+                    uiImage.sprite = Resources.Load<Sprite>("Sprites/" + defaultSpriteName);
+            }
             else
-                spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + currentSpriteName);
+            {
+                if(spriteRenderer != null)
+                    spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + currentSpriteName);
+                else if(uiImage != null)
+                    uiImage.sprite = Resources.Load<Sprite>("Sprites/" + currentSpriteName);
+            }
 
             //Debug.LogError(photonView.ViewID + ": The client over there tells me to display sprite named: " + currentSpriteName);
         }
@@ -64,6 +93,13 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
 
     public void ChangeSprite(Sprite newSprite)
     {
+        if(newSprite == null)
+        {
+            newSprite = Resources.Load<Sprite>("Sprites/" + defaultSpriteName);
+        }
+        if (spriteRenderer != null)
             spriteRenderer.sprite = newSprite;
+        else if (uiImage != null)
+            uiImage.sprite = newSprite;
     }
 }

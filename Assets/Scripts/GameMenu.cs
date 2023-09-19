@@ -13,7 +13,15 @@ public class GameMenu : MonoBehaviourPunCallbacks
 
     public void Leave()
     {
-        PhotonNetwork.LeaveRoom(true);
+        if(PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
+        {
+            Debug.LogError("Quit Game");
+        }
+        else
+        {
+            Debug.LogError("Quit Multiplayer Game");
+            //PhotonNetwork.LeaveRoom(true);
+        }
     }
     public override void OnLeftRoom()
     {

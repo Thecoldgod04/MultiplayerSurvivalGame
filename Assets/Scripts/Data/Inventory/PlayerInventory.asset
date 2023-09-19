@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: PlayerInventory
   m_EditorClassIdentifier: 
   itemList:
-  - itemMeta: {fileID: 11400000, guid: 6329984bab1281c4f819249e42bc08b7, type: 2}
-    amount: 1
+  - itemMeta: {fileID: 11400000, guid: 9385f3b6a64b5064cbcc2d2736876a7e, type: 2}
+    amount: 4
+  - itemMeta: {fileID: 11400000, guid: 7b17531465690fe45864264783f5215c, type: 2}
+    amount: 4
+  inventorySize: 7

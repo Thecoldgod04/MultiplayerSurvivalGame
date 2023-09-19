@@ -5,7 +5,7 @@ using Photon.Pun;
 
 public class Movement : MonoBehaviourPunCallbacks
 {
-    private IMovement moveInput;
+    public IMovement moveInput { get; private set; }
 
     [SerializeField]
     private Rigidbody2D rb;
@@ -24,23 +24,30 @@ public class Movement : MonoBehaviourPunCallbacks
     void Update()
     {
         //if (!photonView.IsMine) return;
-        CalculateVelocity();
+        //CalculateVelocity();
     }
 
     private void FixedUpdate()
     {
-        Move();
+        //Move();
+    }
+
+    public void SetMoveInput(IMovement moveInput)
+    {
+        this.moveInput = moveInput;
     }
 
     Vector2 velocity;
-    private void CalculateVelocity()
+    public void CalculateVelocity()
     {
         velocity = new Vector2(moveInput.xInput, moveInput.yInput);
+
+        //Debug.LogError(moveInput.xInput + " : " + moveInput.yInput);
 
         velocity.Normalize();
     }
 
-    private void Move()
+    public void ApplyVelocity()
     {
         rb.velocity = (velocity * moveSpeed) * Time.fixedDeltaTime;
     }

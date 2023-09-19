@@ -15,7 +15,14 @@ public class Destroyer : MonoBehaviourPun
     {
         destroyRange = Builder.buildRange;
 
-        constructionLayer = FindObjectOfType<ConstructionLayer>();
+        if(ConstructionLayer.instance == null)
+        {
+            constructionLayer = FindObjectOfType<ConstructionLayer>();
+        }
+        else
+        {
+            constructionLayer = ConstructionLayer.instance;
+        }
     }
 
     // Update is called once per frame
@@ -41,13 +48,22 @@ public class Destroyer : MonoBehaviourPun
             if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
                 RequestDestroy(mousePos);
             else
-                photonView.RPC("RequestDestroy", RpcTarget.All, mousePos);
+                photonView.RPC("RequestDestroy", RpcTarget.AllBuffered, mousePos);
         }
     }
 
     [PunRPC]
     public void RequestDestroy(Vector3 pos)
     {
+        if (ConstructionLayer.instance == null)
+        {
+            constructionLayer = FindObjectOfType<ConstructionLayer>();
+        }
+        else
+        {
+            constructionLayer = ConstructionLayer.instance;
+        }
+
         constructionLayer.Destroy(pos);
     }
 

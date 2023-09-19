@@ -11,7 +11,8 @@ public class ItemMeta : ScriptableObject
     [SerializeField]
     private string itemName;
 
-    public static int maxAmount = 12;
+    [SerializeField]
+    private int maxAmount = 12;
 
     [SerializeField]
     private Sprite sprite;

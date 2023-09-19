@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.Events;
 
 public class Life : MonoBehaviourPun
 {
@@ -16,6 +17,10 @@ public class Life : MonoBehaviourPun
 
     [field: SerializeField]
     public ILife lifeBehavior { get; private set; }
+
+
+    [Header("Events")]
+    public UnityEvent onDamageTake, onHeal, onDeath;
 
 
     // Start is called before the first frame update
@@ -37,8 +42,13 @@ public class Life : MonoBehaviourPun
            photonView.IsMine == true)
         {
             if (UIManager.instance.IsUsingUI()) return;
-            Heal();
+            //Heal();
         }
+    }
+
+    public void SetHealth(int health)
+    {
+        this.health = health;
     }
 
     public void TakeDamage(int amount)
@@ -48,7 +58,9 @@ public class Life : MonoBehaviourPun
         if(health <= 0)
         {
             Die();
-        }    
+            return;
+        }
+        onDamageTake.Invoke();
     }
 
     public void Heal()
@@ -61,6 +73,8 @@ public class Life : MonoBehaviourPun
         {
             health += lifeBehavior.Heal();
         }
+
+        onHeal.Invoke();
     }
 
     [PunRPC]
@@ -68,6 +82,8 @@ public class Life : MonoBehaviourPun
     {
         Debug.LogError(transform.name + ": died");
         PhotonNetwork.Destroy(this.gameObject);
+
+        onDeath.Invoke();
     }
 
     // Event handling
@@ -78,9 +94,14 @@ public class Life : MonoBehaviourPun
         {
             if (collision.CompareTag(triggerTag))
             {
-                Debug.LogError("Ouch");
+                //Debug.LogError("Ouch");
                 int damageTaken = collision.GetComponent<Damage>().damage;
                 TakeDamage(damageTaken);
+
+                if(GetComponent<KnockBack>() != null)
+                {
+                    GetComponent<KnockBack>().Knock(collision.transform);
+                }
             }
         }
     }
