@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e2b2fd098e31f5459301a85c9e95b62, type: 3}
+  m_Name: Normal_Crate_LootTable
+  m_EditorClassIdentifier: 
+  <loots>k__BackingField:
+  - itemMeta: {fileID: 11400000, guid: 9ac4b81b1ac699342a11d624c23fadaf, type: 2}
+    maxAmount: 3
+    possibility: 0.202
+  - itemMeta: {fileID: 11400000, guid: e1cb6cf776c173148a6704b48565d8c2, type: 2}
+    maxAmount: 3
+    possibility: 0.89
+  - itemMeta: {fileID: 11400000, guid: 9385f3b6a64b5064cbcc2d2736876a7e, type: 2}
+    maxAmount: 10
+    possibility: 0.773

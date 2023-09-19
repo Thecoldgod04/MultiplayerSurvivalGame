@@ -22,7 +22,7 @@ public class ZombieUnhurtState : IZomebieState
 
         if (stateMachine.GetIsDamaged() == true)
         {
-            Debug.LogError("AAA");
+            //Debug.LogError("AAA");
             stateMachine.SetIsDamaged(false);
             stateMachine.SetState(stateMachine.hurtState);
         }

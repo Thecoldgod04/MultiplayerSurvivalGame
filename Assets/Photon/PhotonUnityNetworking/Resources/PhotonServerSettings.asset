@@ -51,6 +51,27 @@ MonoBehaviour:
   - Die
   - SpawnConstructionDrop
   - SetItemMeta
+  - AddToCrateDataList
+  - AddToCrateDataListRPC
+  - DoShit
+  - GenerateCrateLoot
+  - AddToCrateInventory
+  - PlayAudioRPC
+  - AddRPC
+  - RemoveRPC
+  - UpdateUI
+  - RegisterObjectToOccupiedList
+  - RequestRegisterBuildableObject
+  - CallForRequest
+  - UpdateUiRPC
+  - ChangeWeather
+  - AddMobToListRPC
+  - RemoveFromMobListRPC
+  - RequestMasterToBuild
+  - LoadPlayerRPC
+  - SavePlayer
+  - LoadPlayer
+  - ApplyLoadedData
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

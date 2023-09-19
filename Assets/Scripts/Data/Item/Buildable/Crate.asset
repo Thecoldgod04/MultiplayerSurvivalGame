@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3f3744f4165249b0b840b77e747b6, type: 3}
+  m_Name: Crate
+  m_EditorClassIdentifier: 
+  id: 9
+  itemName: Crate
+  maxAmount: 12
+  sprite: {fileID: 21300000, guid: ef18d98615cf7c34aacbaf30d7f23ef7, type: 3}
+  <tile>k__BackingField: {fileID: 11400000, guid: 788b7e3ec97376b4d82bc59effc055c8, type: 2}
+  <gameObject>k__BackingField: {fileID: 4009869041630207097, guid: 739dc387c4f53cf4ca10bbddee5cad07, type: 3}
+  <type>k__BackingField: 3
+  dropList: {fileID: 0}

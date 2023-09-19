@@ -23,11 +23,11 @@ public class Flip : MonoBehaviour
 
     public void DoFlipByInput(float input)
     {
-        if (input > 0 && facingRight == false)
+        if (input < 0 && facingRight == false)
         {
             Flipping();
         }
-        else if (input < 0 && facingRight == true)
+        else if (input > 0 && facingRight == true)
         {
             Flipping();
         }

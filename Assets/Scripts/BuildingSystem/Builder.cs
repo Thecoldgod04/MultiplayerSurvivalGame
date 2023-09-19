@@ -108,7 +108,20 @@ public class Builder : MonoBehaviourPun
         BuildableMeta buildableMeta = (BuildableMeta)ItemMetaManager.instance.GetItemMetaById(buildableMetaId);
         //Debug.LogError(buildableMeta.GetId());
 
-        constructionLayer.Build(pos, buildableMeta);
+        GameObject gameObject = constructionLayer.Build(pos, buildableMeta);
+
+
+        GameObject chunkObject = null;
+
+        if(ChunkManager.instance.LoadedChunks.ContainsKey(ChunkManager.instance.GetChunkPosition(pos)))
+        {
+            chunkObject = ChunkManager.instance.LoadedChunks[ChunkManager.instance.GetChunkPosition(pos)];
+        }
+
+        if(chunkObject != null && gameObject != null)
+        {
+            gameObject.transform.SetParent(chunkObject.transform);
+        }
 
         //constructionLayer.Build(buildCursor.position, currentBuildable);
     }

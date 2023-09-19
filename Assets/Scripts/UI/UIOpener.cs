@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class UIOpener : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class UIOpener : MonoBehaviour
 
     [SerializeField]
     private KeyCode activationKey;
+
+    public UnityEvent onOpen, onClose;
 
     [SerializeField]
     private bool beingUsed = false;
@@ -54,6 +57,7 @@ public class UIOpener : MonoBehaviour
         uiObject.SetActive(true);
         UIManager.instance.IsUsingUI(true);
         beingUsed = true;
+        onOpen.Invoke();
     }
 
     public void CloseUI()
@@ -61,5 +65,6 @@ public class UIOpener : MonoBehaviour
         uiObject.SetActive(false);
         UIManager.instance.IsUsingUI(false);
         beingUsed = false;
+        onClose.Invoke();
     }
 }

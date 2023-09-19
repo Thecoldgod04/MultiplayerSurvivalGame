@@ -15,6 +15,9 @@ public class BuildableMeta : ItemMeta
     [field: SerializeField]
     public BuildableType type { get; private set; }
 
+    [field: SerializeField]
+    public LootTable lootTable;
+
     private TileBase transparentTile;
 
     public override void Init(int id)
@@ -40,6 +43,11 @@ public class BuildableMeta : ItemMeta
 
     private void RegisterType()
     {
+        if (gameObject != null && type == BuildableType.DataGameObject)
+        {
+            return;
+        }
+
         if (gameObject != null && tile != null && tile != transparentTile)
         {
             Debug.LogError("The buildable_meta can not be both GameObject and Tile from buildable_meta ID: " + GetId());
@@ -65,5 +73,6 @@ public enum BuildableType
 {
     None,
     Tile,
-    GameObject
+    GameObject,
+    DataGameObject
 }

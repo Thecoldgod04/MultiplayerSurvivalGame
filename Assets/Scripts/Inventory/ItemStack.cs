@@ -30,20 +30,32 @@ public class ItemStack : MonoBehaviourPun
         spriteRenderer.sprite = itemMeta.GetSprite();
         rb = GetComponent<Rigidbody2D>();
 
-        float x = Random.Range(-1, 1);
+        /*float x = Random.Range(-1, 1);
         float y = Random.Range(-1, 1);
         Splash(x, y);
-        rb.velocity = velocity * splashSpeed * Time.fixedDeltaTime;
+        rb.velocity = velocity * splashSpeed * Time.fixedDeltaTime;*/
     }
+
     private void Update()
     {
-        //SplashTimeCountdown();
+        SplashTimeCountdown();
     }
 
     float slowDownSpeed = 10f;
     private void FixedUpdate()
     {
-        rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, slowDownSpeed * Time.fixedDeltaTime);
+        //rb.velocity = Vector2.Lerp(rb.velocity, Vector2.zero, slowDownSpeed * Time.fixedDeltaTime);
+    }
+
+    float splashTime = 0.3f;
+    public void SplashTimeCountdown()
+    {
+        splashTime -= Time.deltaTime;
+        if(splashTime <= 0)
+        {
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
+        }
     }
 
     float splashSpeed = 700f;
@@ -92,20 +104,25 @@ public class ItemStack : MonoBehaviourPun
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (rb.velocity.x > 0.5 || rb.velocity.y > 0.5) return;
+
+        bool collectionSuccess = false;
+
         if(collision.CompareTag("Player"))
         {
             if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
             {
                 if (collision.GetComponent<PhotonView>().IsMine == true)
                 {
-                    inventoryController.OnItemCollected(this);
+                    collectionSuccess = inventoryController.OnItemCollected(this);
                 }
             }
             else
             {
-                inventoryController.OnItemCollected(this);
+                collectionSuccess = inventoryController.OnItemCollected(this);
             }
-            Destroy(this.gameObject);
+
+            if(collectionSuccess)
+                Destroy(this.gameObject);
         }
     }
 }

@@ -77,7 +77,7 @@ public class ZombieStateMachine : MonoBehaviour
     void Update()
     {
         currentState.DoStateUpdate(this);
-        Debug.LogError(currentState);
+        //Debug.LogError(currentState);
     }
 
     private void FixedUpdate()

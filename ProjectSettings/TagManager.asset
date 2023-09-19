@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BuildCursor
   - Enemy
+  - PlayerAttack
   layers:
   - Default
   - TransparentFX

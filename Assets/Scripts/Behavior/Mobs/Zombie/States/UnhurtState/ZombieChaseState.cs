@@ -42,8 +42,9 @@ public class ZombieChaseState : ZombieUnhurtState
 
         stateMachine.movementBehavior.moveInput.UpdateInput();
         stateMachine.movementBehavior.CalculateVelocity();
+        stateMachine.GetComponent<Flip>().DoFlipByInput(stateMachine.movementBehavior.moveInput.xInput);
 
-        if(Vector2.Distance(stateMachine.transform.position, targetPlayer.position) > stateMachine.chaseRange)
+        if (Vector2.Distance(stateMachine.transform.position, targetPlayer.position) > stateMachine.chaseRange)
         {
             giveUpTime -= Time.deltaTime;
             if(giveUpTime <= 0)

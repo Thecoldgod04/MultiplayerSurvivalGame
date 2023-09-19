@@ -6,6 +6,8 @@ using ExitGames.Client.Photon;
 
 public class MapGenerator : MonoBehaviourPun
 {
+    public static MapGenerator instance;
+
     [SerializeField]
     private int width, height;
 
@@ -40,44 +42,54 @@ public class MapGenerator : MonoBehaviourPun
     // Start is called before the first frame update
     void Start()
     {
-        noiseGenerator = new NoiseGenerator();
-        worldConfiguration = WorldConfiguration.instance;
-
-        if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && PhotonNetwork.IsMasterClient)
+        if(instance == null)
         {
-            seed = Random.Range(0, 2);
+            instance = this;
 
-            ExitGames.Client.Photon.Hashtable customPropWorldSeed = new ExitGames.Client.Photon.Hashtable();
-            customPropWorldSeed["world_seed"] = seed;
-            PhotonNetwork.CurrentRoom.SetCustomProperties(customPropWorldSeed);
-        }
-        else if(PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && !PhotonNetwork.IsMasterClient)
-        {
-            seed = (int) PhotonNetwork.CurrentRoom.CustomProperties["world_seed"];
-            Logger.LogError("MapGenerator", "Seed: " + seed);
+            noiseGenerator = new NoiseGenerator();
+            worldConfiguration = WorldConfiguration.instance;
+
+            if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && PhotonNetwork.IsMasterClient)
+            {
+                seed = Random.Range(0, 2);
+
+                ExitGames.Client.Photon.Hashtable customPropWorldSeed = new ExitGames.Client.Photon.Hashtable();
+                customPropWorldSeed["world_seed"] = seed;
+                PhotonNetwork.CurrentRoom.SetCustomProperties(customPropWorldSeed);
+            }
+            else if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && !PhotonNetwork.IsMasterClient)
+            {
+                seed = (int)PhotonNetwork.CurrentRoom.CustomProperties["world_seed"];
+                Logger.LogError("MapGenerator", "Seed: " + seed);
+            }
+            else
+            {
+                seed = 0;
+            }
+
+            System.Random proceduralRandomizer = new System.Random(seed);
+            float proceduralRandomizedAlt = proceduralRandomizer.Next(-100000, 10000);
+            float proceduralRandomizedTemp = proceduralRandomizer.Next(-100000, 10000);
+            float proceduralRandomizedMoist = proceduralRandomizer.Next(-100000, 10000);
+
+            //Debug.LogError("ALT: " + proceduralRandomizedAlt);
+            //Debug.LogError("TEMP: " + proceduralRandomizedTemp);
+            //
+            //Debug.LogError("MOIST: " + proceduralRandomizedMoist);
+
+            worldSize = WorldConfiguration.instance.WorldSize;
+
+            temperature = noiseGenerator.GetNoiseMap(worldSize, worldSize, proceduralRandomizedTemp, scale);
+            altitude = noiseGenerator.GetNoiseMap(worldSize, worldSize, proceduralRandomizedAlt, scale);
+            moisture = noiseGenerator.GetNoiseMap(worldSize, worldSize, proceduralRandomizedMoist, scale);
+
+            biomeData = GetBiomeData();
+            environmentData = GetEnvironmentData(biomeData);
         }
         else
         {
-            seed = 0;
+            Destroy(this.gameObject);
         }
-
-        System.Random proceduralRandomizer = new System.Random(seed);
-        float proceduralRandomizedAlt = proceduralRandomizer.Next(-100000, 10000);
-        float proceduralRandomizedTemp = proceduralRandomizer.Next(-100000, 10000);
-        float proceduralRandomizedMoist = proceduralRandomizer.Next(-100000, 10000);
-
-        Debug.LogError("ALT: " + proceduralRandomizedAlt);
-        Debug.LogError("TEMP: " + proceduralRandomizedTemp);
-        Debug.LogError("MOIST: " + proceduralRandomizedMoist);
-
-        worldSize = WorldConfiguration.instance.WorldSize;
-
-        temperature = noiseGenerator.GetNoiseMap(worldSize, worldSize, proceduralRandomizedTemp, scale);
-        altitude = noiseGenerator.GetNoiseMap(worldSize, worldSize, proceduralRandomizedAlt, scale);
-        moisture = noiseGenerator.GetNoiseMap(worldSize, worldSize, proceduralRandomizedMoist, scale);
-
-        biomeData = GetBiomeData();
-        environmentData = GetEnvironmentData(biomeData);
     }
 
     // Update is called once per frame
@@ -160,7 +172,7 @@ public class MapGenerator : MonoBehaviourPun
             }
         }
 
-        biomeLayer.Refresh();
+        //biomeLayer.Refresh();
         return biomeData;
     }
 
@@ -185,14 +197,15 @@ public class MapGenerator : MonoBehaviourPun
                         {
                             //constructionLayer.Build(new Vector3(x, y), EnvironmentGenerator.cactus);
                             environmentData[x, y] = envirConf.Key;
-                            //if (envirConf.Key == 4) Debug.LogWarning("Yaaaa");
-                        }
-                        else
-                        {
-                            environmentData[x, y] = worldConfiguration.EnvironmentConfig.air;
+                            //if (environmentData[x, y] == 4) Debug.LogWarning(x + ", " + y);
                         }
                     }
                 }
+                else
+                {
+                    environmentData[x, y] = worldConfiguration.EnvironmentConfig.air;
+                }
+                //Debug.LogWarning(environmentData[x, y]);
             }
         }
         //environmentGenerator.GenerateEnv(environmentData);

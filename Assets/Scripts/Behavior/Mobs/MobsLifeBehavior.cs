@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MobsLifeBehavior : MonoBehaviour, ILife
 {
+    [field: SerializeField]
     public string triggerDamageTag { get; private set; }
 
     public int Heal()
@@ -15,7 +16,7 @@ public class MobsLifeBehavior : MonoBehaviour, ILife
     // Start is called before the first frame update
     void Awake()
     {
-        triggerDamageTag = "Player";
+        //triggerDamageTag = "Player";
 
         //triggerDamageTag = "PlayerAttack";
     }

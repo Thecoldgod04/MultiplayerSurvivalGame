@@ -6,7 +6,7 @@ using Photon.Pun;
 public class Droppable : MonoBehaviourPun
 {
     [SerializeField]
-    private DropList dropList;
+    private LootTable dropList;
 
     private void Start()
     {
@@ -15,7 +15,9 @@ public class Droppable : MonoBehaviourPun
 
     public void SpawnDrop()
     {
-        if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
+        DropManager.instance.SpawnDrop(dropList, transform.position);
+
+        /*if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
         {
             foreach(DropItem drop in dropList.drops)
             {
@@ -34,10 +36,10 @@ public class Droppable : MonoBehaviourPun
                     PhotonNetwork.Instantiate("Items/" + drop.itemStack.name, transform.position, Quaternion.identity);
                 }
             }
-        }
+        }*/
     }
 
-    private bool CanDrop(DropItem drop)
+    private bool CanDrop(Loot drop)
     {
         float num = (int) (drop.possibility * 100);
         float random = Random.Range(0, 101);

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff3f3744f4165249b0b840b77e747b6, type: 3}
+  m_Name: SkullMeta
+  m_EditorClassIdentifier: 
+  id: 7
+  itemName: Skull
+  maxAmount: 12
+  sprite: {fileID: 21300000, guid: ec08f76dfad65ba42a77342d3f2c3dfa, type: 3}
+  <tile>k__BackingField: {fileID: 11400000, guid: 788b7e3ec97376b4d82bc59effc055c8, type: 2}
+  <gameObject>k__BackingField: {fileID: 8275618453927440888, guid: bb841da4f87f74342aef0d3ad4ae2dec, type: 3}
+  <type>k__BackingField: 2
+  dropList: {fileID: 0}

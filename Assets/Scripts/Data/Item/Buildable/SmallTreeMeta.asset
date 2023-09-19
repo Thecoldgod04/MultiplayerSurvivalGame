@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff3f3744f4165249b0b840b77e747b6, type: 3}
   m_Name: SmallTreeMeta
   m_EditorClassIdentifier: 
-  id: 0
+  id: 4
   itemName: Small Tree
   maxAmount: 12
-  sprite: {fileID: 21300000, guid: c177e21ef22ef2d42a606c844b38c7c8, type: 3}
-  <tile>k__BackingField: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 1af1cdea4f5f36e47b1a98c26976fcd3, type: 3}
+  <tile>k__BackingField: {fileID: 11400000, guid: 788b7e3ec97376b4d82bc59effc055c8, type: 2}
   <gameObject>k__BackingField: {fileID: 4009869041630207097, guid: d1ec84009fd61744c8ca3bcb7ec00dff, type: 3}
   <type>k__BackingField: 2
+  lootTable: {fileID: 11400000, guid: 891fe6ea27715444da59b5b4c1007274, type: 2}

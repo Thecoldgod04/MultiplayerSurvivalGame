@@ -42,8 +42,13 @@ public class Life : MonoBehaviourPun
            photonView.IsMine == true)
         {
             if (UIManager.instance.IsUsingUI()) return;
-            Heal();
+            //Heal();
         }
+    }
+
+    public void SetHealth(int health)
+    {
+        this.health = health;
     }
 
     public void TakeDamage(int amount)
@@ -89,9 +94,14 @@ public class Life : MonoBehaviourPun
         {
             if (collision.CompareTag(triggerTag))
             {
-                Debug.LogError("Ouch");
+                //Debug.LogError("Ouch");
                 int damageTaken = collision.GetComponent<Damage>().damage;
                 TakeDamage(damageTaken);
+
+                if(GetComponent<KnockBack>() != null)
+                {
+                    GetComponent<KnockBack>().Knock(collision.transform);
+                }
             }
         }
     }

@@ -53,6 +53,48 @@ public class ObjectPool : MonoBehaviour
         }
         return null;
     }
+
+    public void AddToPool(GameObject gameObject)
+    {
+        foreach (List<GameObject> objectPool in ObjectPoolList)
+        {
+            if (objectPool[0].name.Contains(gameObject.name))
+            {
+                objectPool.Add(gameObject);
+                return;
+            }
+        }
+/*
+        List<GameObject> newObjectPool = new List<GameObject>();
+        newObjectPool.Add(gameObject);
+        ObjectPoolList.Add(newObjectPool);*/
+    }
+
+    public void AddNewToPool(GameObject gameObject)
+    {
+        if(IsInPool(gameObject))
+        {
+            AddToPool(gameObject);
+        }
+        else
+        {
+            List<GameObject> newPool = new List<GameObject>();
+            newPool.Add(gameObject);
+            ObjectPoolList.Add(newPool);
+        }
+    }
+    public bool IsInPool(GameObject gameObject)
+    {
+        foreach (List<GameObject> objectPool in ObjectPoolList)
+        {
+            //Debug.LogError(gameObject == null);
+            if (objectPool[0].name.Contains(gameObject.name))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 [System.Serializable]

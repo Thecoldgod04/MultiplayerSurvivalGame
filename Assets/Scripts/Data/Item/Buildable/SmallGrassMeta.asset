@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ff3f3744f4165249b0b840b77e747b6, type: 3}
   m_Name: SmallGrassMeta
   m_EditorClassIdentifier: 
-  id: 0
+  id: 5
   itemName: Small Grass
   maxAmount: 12
-  sprite: {fileID: 21300000, guid: 605d2f35d588b5243bf2c45093e08d67, type: 3}
-  <tile>k__BackingField: {fileID: 0}
-  <gameObject>k__BackingField: {fileID: 8275618453927440888, guid: b76f6199f9c6bbb42a345ad29aee730e, type: 3}
+  sprite: {fileID: 21300000, guid: be706daeb9cb3f842acc88ef08262a91, type: 3}
+  <tile>k__BackingField: {fileID: 11400000, guid: 788b7e3ec97376b4d82bc59effc055c8, type: 2}
+  <gameObject>k__BackingField: {fileID: 8275618453927440888, guid: 16f474b86fe5e6e4db5ce29433b14797, type: 3}
   <type>k__BackingField: 2
+  dropList: {fileID: 11400000, guid: ac80a105549de1c4c8186733f0c93394, type: 2}

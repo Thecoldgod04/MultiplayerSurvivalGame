@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Photon.Pun;
+using UnityEngine.Events;
 
-public class PlayerInventoryController : MonoBehaviourPun
+public class PlayerInventoryController : InventoryController
 {
     public static PlayerInventoryController instance;
 
@@ -17,6 +18,9 @@ public class PlayerInventoryController : MonoBehaviourPun
     private List<TextMeshProUGUI> amountTextList;
 
     [SerializeField]
+    private List<Button> slotButtonList;
+
+    [SerializeField]
     private Transform selectionFrame;
 
     public static ItemMeta itemInHand { get; private set; }
@@ -25,16 +29,21 @@ public class PlayerInventoryController : MonoBehaviourPun
     [SerializeField]
     private int currentSelection;
 
-    [Header("Database")]
-    [SerializeField]
-    private Inventory inventoryDatabase;
+    [field: SerializeField]
+    public InventoryController CurrentOpenedInventory { get; private set; }
 
-    private void Start()
+    //[Header("Database")]
+    [field: SerializeField]
+    public Inventory inventoryDatabase { get; private set; }
+
+    protected override void Start()
     {
         if (instance == null)
             instance = this;
         else
             Destroy(this.gameObject);
+
+        inventory = inventoryDatabase;
 
         if (iconList.Count != amountTextList.Count)
         {
@@ -42,17 +51,68 @@ public class PlayerInventoryController : MonoBehaviourPun
             return;
         }
 
-        UpdateInventoryUI();
+        //UpdateInventoryUI();
+        UpdateUI();
     }
 
     public void UpdateInventoryUI()
     {
         int i = 0;
-        foreach(DataBaseItemStack db in inventoryDatabase.GetItemList())
+        foreach(DataBaseItemStack db in inventory.GetItemList())
         {
             iconList[i].sprite = db.itemMeta.GetSprite(); iconList[i].color = Color.white;
             amountTextList[i].text = db.amount.ToString();
             i++;
+        }
+    }
+
+    public void SetCurrentOpenedInventory(InventoryController inventoryController)
+    {
+        CurrentOpenedInventory = inventoryController;
+    }
+
+    public void RegisterOnClickFunction()
+    {
+        for(int i = 0; i < slotButtonList.Count; i++)
+        {
+            Button button = slotButtonList[i];
+            button.onClick.AddListener(new UnityAction(() => OnSlotButtonClicked(i)));
+        }
+    }
+
+    public void OnSlotButtonClicked(int slotIndex)
+    {
+        if (CurrentOpenedInventory == null)
+        {
+            //Debug.LogError("CurrentOpenedInventory == null");
+            return;
+        }
+
+        DataBaseItemStack dataBaseItemStack = null;
+        if(slotIndex+1 <= inventory.GetItemList().Count)
+        {
+            dataBaseItemStack = inventory.GetItemList()[slotIndex];
+
+            CurrentOpenedInventory.AddToInventory(dataBaseItemStack.itemMeta);
+
+            this.RemoveFromInventory(dataBaseItemStack.itemMeta);
+
+            /*int itemMetaId = ItemMetaManager.instance.itemMetaList.IndexOf(dataBaseItemStack.itemMeta);
+
+            if (itemMetaId >= 0)
+            {
+                if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
+                {
+                    CurrentOpenedInventory.AddRPC(itemMetaId);
+                }
+                else if (CurrentOpenedInventory.GetPhotonView() != null)
+                {
+                    CurrentOpenedInventory.GetPhotonView().RPC("AddRPC", RpcTarget.AllBuffered, itemMetaId);
+                }
+
+                inventory.Remove(dataBaseItemStack.itemMeta);
+                UpdateUI();
+            }*/
         }
     }
 
@@ -77,36 +137,100 @@ public class PlayerInventoryController : MonoBehaviourPun
 
         selectionFrame.position = iconList[currentSelection].transform.position;
 
-        if (inventoryDatabase.GetItemList().Count == 0 ||
-            inventoryDatabase.GetItemList().Count-1 < currentSelection ||
-            inventoryDatabase.GetItemList()[currentSelection] == null)
+        if (inventory.GetItemList().Count == 0 ||
+            inventory.GetItemList().Count-1 < currentSelection ||
+            inventory.GetItemList()[currentSelection] == null)
         {
             itemInHand = null;
             return;
         }
-        itemInHand = inventoryDatabase.GetItemList()[currentSelection].itemMeta;
+        itemInHand = inventory.GetItemList()[currentSelection].itemMeta;
     }
 
     private void Update()
     {
         UpdateSelection();
+        //UpdateUI();
     }
+
+    /*public ov void AddToInventory(ItemMeta itemMeta)
+    {
+        inventoryDatabase.Add(itemMeta);
+        UpdateUI();
+    }*/
+
+    public override void UpdateUI()
+    {
+        /*if(inventory.GetItemList().Count == 0)
+        {
+            for (int i = 0; i < amountTextList.Count; i++)
+            {
+                iconList[i].sprite = null;
+                iconList[i].color = Color.white;
+                iconList[i].color = new Color(1f, 1f, 1f, 0f);
+
+                amountTextList[i].text = "";
+            }
+        }
+        for (int i = 0; i < inventory.GetItemList().Count; i++)
+        {
+            DataBaseItemStack tempDB = inventory.GetItemList()[i];
+
+            iconList[i].sprite = tempDB.itemMeta.GetSprite();
+            iconList[i].color = Color.white;
+            iconList[i].color = new Color(1f, 1f, 1f, 1f);
+
+            amountTextList[i].text = tempDB.amount.ToString();
+        }*/
+
+        for(int i = 0; i < slotButtonList.Count; i++)
+        {
+            if (i >= inventory.GetItemList().Count)
+            {
+                iconList[i].sprite = null;
+                iconList[i].color = Color.white;
+                iconList[i].color = new Color(1f, 1f, 1f, 0f);
+
+                amountTextList[i].text = "";
+            }
+            else
+            {
+                DataBaseItemStack tempDB = inventory.GetItemList()[i];
+
+                iconList[i].sprite = tempDB.itemMeta.GetSprite();
+                iconList[i].color = Color.white;
+                iconList[i].color = new Color(1f, 1f, 1f, 1f);
+
+                amountTextList[i].text = tempDB.amount.ToString();
+            }
+        }
+    }
+
+    /*public IInventory GetInventory()
+    {
+        return inventory;
+    }*/
 
     //Event handling
 
-    public void OnItemCollected(ItemStack itemStack)
+    public bool OnItemCollected(ItemStack itemStack)
     {
         //if (photonView.IsMine == false) return;
         //DatabaseItemStack databaseItemStack = new DatabaseItemStack { itemStack = itemStack };
 
         //Update database
-        int indexOfAddedItem = inventoryDatabase.Add(itemStack);
+        int indexOfAddedItem = inventory.Add(itemStack);
+
+        if (indexOfAddedItem == -1) return false;
 
         //Update UI
-        iconList[indexOfAddedItem].sprite = inventoryDatabase.Get(indexOfAddedItem).itemMeta.GetSprite(); 
+        /*iconList[indexOfAddedItem].sprite = inventoryDatabase.Get(indexOfAddedItem).itemMeta.GetSprite();
         iconList[indexOfAddedItem].color = Color.white;
         iconList[indexOfAddedItem].color = new Color(1f, 1f, 1f, 1f);
-        
-        amountTextList[indexOfAddedItem].text = inventoryDatabase.Get(indexOfAddedItem).amount.ToString();
+
+        amountTextList[indexOfAddedItem].text = inventoryDatabase.Get(indexOfAddedItem).amount.ToString();*/
+        UpdateUI();
+
+        return true;
     }
 }

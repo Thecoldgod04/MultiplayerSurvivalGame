@@ -49,6 +49,7 @@ public class ZombieWanderState : IZomebieState
         stateMachine.movementBehavior.SetMoveInput(stateMachine.wanderMoveInput);
         stateMachine.movementBehavior.moveInput.UpdateInput();
         stateMachine.movementBehavior.CalculateVelocity();
+        stateMachine.GetComponent<Flip>().DoFlipByInput(stateMachine.movementBehavior.moveInput.xInput);
     }
 
     private void Wander(ZombieStateMachine stateMachine)

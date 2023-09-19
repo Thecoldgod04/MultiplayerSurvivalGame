@@ -15,6 +15,9 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
     [SerializeField]
     private string currentSpriteName;
 
+    [SerializeField]
+    private string defaultSpriteName;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,9 +75,9 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
             if (currentSpriteName == "")
             {
                 if(spriteRenderer != null)
-                    spriteRenderer.sprite = null;
+                    spriteRenderer.sprite = Resources.Load<Sprite>("Sprites/" + defaultSpriteName);
                 if(uiImage != null)
-                    uiImage.sprite = null;
+                    uiImage.sprite = Resources.Load<Sprite>("Sprites/" + defaultSpriteName);
             }
             else
             {
@@ -90,6 +93,10 @@ public class SpriteView : MonoBehaviourPun, IPunObservable
 
     public void ChangeSprite(Sprite newSprite)
     {
+        if(newSprite == null)
+        {
+            newSprite = Resources.Load<Sprite>("Sprites/" + defaultSpriteName);
+        }
         if (spriteRenderer != null)
             spriteRenderer.sprite = newSprite;
         else if (uiImage != null)

@@ -38,12 +38,14 @@ public class PlayerStateMachine : MonoBehaviourPun
     void Update()
     {
         if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && !photonView.IsMine) return;
+        if (currentState == null) return;
         currentState.DoStateUpdate(this);
     }
 
     void FixedUpdate()
     {
         if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && !photonView.IsMine) return;
+        if (currentState == null) return;
         currentState.DoStateFixedUpdate(this);
     }
 
