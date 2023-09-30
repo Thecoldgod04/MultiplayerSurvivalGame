@@ -157,7 +157,6 @@ GameObject:
   - component: {fileID: 2802461789470843969}
   - component: {fileID: 3119963539340977775}
   - component: {fileID: 1024474854692976152}
-  - component: {fileID: 1944635916692001982}
   - component: {fileID: 1491753620406831419}
   - component: {fileID: 7179787358074667809}
   - component: {fileID: 7703621434022107095}
@@ -307,7 +306,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5445690443954489539}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac0ff735a60149043ac2d1753b9458e1, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f125ac8a2df3bb4e8cd2df0234291cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   <unhurtState>k__BackingField:
@@ -389,7 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <health>k__BackingField: 100
   <maxHealth>k__BackingField: 100
-  <triggerTag>k__BackingField: 
+  <triggerTag>k__BackingField: PlayerAttack
   onDamageTake:
     m_PersistentCalls:
       m_Calls:
@@ -423,19 +422,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1944635916692001982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5445690443954489539}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c22bfa8ae6ede4648b42e7de89211882, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <triggerDamageTag>k__BackingField: PlayerAttack
 --- !u!114 &1491753620406831419
 MonoBehaviour:
   m_ObjectHideFlags: 0

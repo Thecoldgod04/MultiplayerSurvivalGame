@@ -39,6 +39,8 @@ public class MapGenerator : MonoBehaviourPun
     private int worldSize;
     private WorldConfiguration worldConfiguration;
 
+    public bool generated;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,9 +51,14 @@ public class MapGenerator : MonoBehaviourPun
             noiseGenerator = new NoiseGenerator();
             worldConfiguration = WorldConfiguration.instance;
 
+            SaveLoadManager.instance.LoadGameRPC();
+
             if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && PhotonNetwork.IsMasterClient)
             {
-                seed = Random.Range(0, 2);
+                if (!generated)
+                {
+                    seed = Random.Range(0, 2);
+                }
 
                 ExitGames.Client.Photon.Hashtable customPropWorldSeed = new ExitGames.Client.Photon.Hashtable();
                 customPropWorldSeed["world_seed"] = seed;
@@ -72,11 +79,6 @@ public class MapGenerator : MonoBehaviourPun
             float proceduralRandomizedTemp = proceduralRandomizer.Next(-100000, 10000);
             float proceduralRandomizedMoist = proceduralRandomizer.Next(-100000, 10000);
 
-            //Debug.LogError("ALT: " + proceduralRandomizedAlt);
-            //Debug.LogError("TEMP: " + proceduralRandomizedTemp);
-            //
-            //Debug.LogError("MOIST: " + proceduralRandomizedMoist);
-
             worldSize = WorldConfiguration.instance.WorldSize;
 
             temperature = noiseGenerator.GetNoiseMap(worldSize, worldSize, proceduralRandomizedTemp, scale);
@@ -96,6 +98,26 @@ public class MapGenerator : MonoBehaviourPun
     void Update()
     {
 
+    }
+
+    public int GetSeed()
+    {
+        return seed;
+    }
+
+    public void SetSeed(int seed)
+    {
+        this.seed = seed;
+    }
+
+    public void SetBiomeData(int[,] biomeData)
+    {
+        this.biomeData = biomeData;
+    }
+
+    public void SetEnvironmentData(int[,] environmentData)
+    {
+        this.environmentData = environmentData;
     }
 
     private int[,] GetBiomeData()

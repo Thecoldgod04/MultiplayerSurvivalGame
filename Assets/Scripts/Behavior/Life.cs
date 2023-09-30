@@ -29,9 +29,9 @@ public class Life : MonoBehaviourPun
         if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined ||
           photonView.IsMine == true)
         {
-            lifeBehavior = GetComponent<ILife>();
+            //lifeBehavior = GetComponent<ILife>();
 
-            triggerTag = lifeBehavior.triggerDamageTag;
+            //triggerTag = lifeBehavior.triggerDamageTag;
         }
     }
 

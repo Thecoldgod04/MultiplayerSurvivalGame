@@ -12,7 +12,7 @@ public class EnvironmentGenerator : MonoBehaviourPun
     [SerializeField]
     private ConstructionLayer constructionLayer;
 
-    private List<Vector3> loadedDataObjects;
+    //private List<Vector3> loadedDataObjects;
 
     //public static BuildableMeta cactus;
     // Start is called before the first frame update
@@ -22,7 +22,8 @@ public class EnvironmentGenerator : MonoBehaviourPun
         //cactus = (BuildableMeta)ItemMetaManager.instance.itemMetaList[3];
 
         //GenerateEnv(mapGenerator.environmentData);
-        loadedDataObjects = ChunkManager.instance.LoadedDataObjects;
+
+        //loadedDataObjects = ChunkManager.instance.LoadedDataObjects;
     }
 
     // Update is called once per frame

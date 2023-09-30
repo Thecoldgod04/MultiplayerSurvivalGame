@@ -1651,7 +1651,7 @@ GameObject:
   - component: {fileID: 7526899330810252787}
   - component: {fileID: 3356120040994383558}
   m_Layer: 0
-  m_Name: Crate
+  m_Name: Loot Crate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1714,7 +1714,7 @@ MonoBehaviour:
   Activated: 0
   lootTable: {fileID: 11400000, guid: da73a8871d9a215478a06a3f0ce6134f, type: 2}
   crateInventory: {fileID: 9131799246772411976}
-  isLootGenerated: 1
+  isLootGenerated: 0
 --- !u!114 &1601394587105296758
 MonoBehaviour:
   m_ObjectHideFlags: 0

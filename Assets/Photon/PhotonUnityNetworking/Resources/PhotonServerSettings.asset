@@ -72,6 +72,12 @@ MonoBehaviour:
   - SavePlayer
   - LoadPlayer
   - ApplyLoadedData
+  - Load
+  - Save
+  - LoadGame
+  - LoadWorld
+  - LoadMap
+  - LoadWorldTime
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

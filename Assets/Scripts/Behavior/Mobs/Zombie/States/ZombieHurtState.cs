@@ -19,7 +19,7 @@ public class ZombieHurtState : IZomebieState
 
     bool isKnocked = false;
 
-    public void DoStateFixedUpdate(ZombieStateMachine stateMachine)
+    public void DoStateFixedUpdate(SlimeStateMachine stateMachine)
     {
         if(enteredState == false)
         {
@@ -36,7 +36,7 @@ public class ZombieHurtState : IZomebieState
         stateMachine.rb.AddForce(difference, ForceMode2D.Impulse);
     }
 
-    public void DoStateUpdate(ZombieStateMachine stateMachine)
+    public void DoStateUpdate(SlimeStateMachine stateMachine)
     {
         if (PhotonNetwork.IsMasterClient != true && PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
         {
@@ -54,7 +54,7 @@ public class ZombieHurtState : IZomebieState
         }
     }
 
-    public void ResetState(ZombieStateMachine stateMachine)
+    public void ResetState(SlimeStateMachine stateMachine)
     {
         stateMachine.rb.velocity = Vector2.zero;
         stateMachine.rb.isKinematic = true;

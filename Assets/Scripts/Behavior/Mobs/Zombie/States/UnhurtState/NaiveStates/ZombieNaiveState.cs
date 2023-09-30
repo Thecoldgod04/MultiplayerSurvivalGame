@@ -7,12 +7,12 @@ using Photon.Pun;
 public class ZombieNaiveState : ZombieUnhurtState
 {
 
-    public override void DoStateFixedUpdate(ZombieStateMachine stateMachine)
+    public override void DoStateFixedUpdate(SlimeStateMachine stateMachine)
     {
 
     }
 
-    public override void DoStateUpdate(ZombieStateMachine stateMachine)
+    public override void DoStateUpdate(SlimeStateMachine stateMachine)
     {
         base.DoStateUpdate(stateMachine);
 
@@ -27,7 +27,7 @@ public class ZombieNaiveState : ZombieUnhurtState
         }
     }
 
-    public override void ResetState(ZombieStateMachine stateMachine)
+    public override void ResetState(SlimeStateMachine stateMachine)
     {
         
     }

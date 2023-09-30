@@ -34,6 +34,8 @@ public class ChunkManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        //SaveLoadManager.instance.LoadGame();
     }
 
     public bool IsInChunksOfLoadedDataObjects(Vector3 pos)

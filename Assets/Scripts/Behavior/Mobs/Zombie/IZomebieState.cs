@@ -4,9 +4,9 @@ using UnityEngine;
 
 public interface IZomebieState
 {
-    public void DoStateUpdate(ZombieStateMachine stateMachine);
+    public void DoStateUpdate(SlimeStateMachine stateMachine);
 
-    public void DoStateFixedUpdate(ZombieStateMachine stateMachine);
+    public void DoStateFixedUpdate(SlimeStateMachine stateMachine);
 
-    public void ResetState(ZombieStateMachine stateMachine);
+    public void ResetState(SlimeStateMachine stateMachine);
 }

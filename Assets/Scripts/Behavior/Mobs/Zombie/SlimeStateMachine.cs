@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZombieStateMachine : MonoBehaviour
+public class SlimeStateMachine : MonoBehaviour
 {
     [SerializeField]
     private IZomebieState currentState;

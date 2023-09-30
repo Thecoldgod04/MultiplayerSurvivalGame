@@ -47,7 +47,7 @@ public class CrateInventoryController : InventoryController
 
     private void OnEnable()
     {
-        RegisterToPlayerInventoryController();
+        //RegisterToPlayerInventoryController();
     }
 
     private void OnDisable()

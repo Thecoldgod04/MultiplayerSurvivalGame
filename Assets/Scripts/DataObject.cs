@@ -47,14 +47,25 @@ public class DataObject : MonoBehaviourPun
     {
         if (!Activated) return;
 
+        //if (transform.parent != null) return;
+
         if(!IsObjectInPlayerOwnerLoadedChunks())
         {
             //this.gameObject.SetActive(false);
             //Debug.LogError("Chest generated at chunk: " + CurrentChunkPosition);
-            GameObject newChunkObject = new GameObject("" + CurrentChunkPosition);
-            transform.SetParent(newChunkObject.transform);
-            newChunkObject.SetActive(false);
-            newChunkObject.transform.SetParent(ChunkManager.instance.transform);
+
+            GameObject newChunkObject = null;
+            if (transform.parent != null)
+            {
+                newChunkObject = new GameObject("" + CurrentChunkPosition);
+                transform.SetParent(newChunkObject.transform);
+                newChunkObject.SetActive(false);
+                newChunkObject.transform.SetParent(ChunkManager.instance.transform);
+            }
+            else
+            {
+                newChunkObject = transform.parent.gameObject;
+            }
 
             ChunkManager.instance.ChunksOfLoadedDataObjects.Add(CurrentChunkPosition, newChunkObject);
             //Debug.LogError(ChunkManager.instance.ChunksOfLoadedDataObjects.Count);

@@ -5,17 +5,25 @@ using Photon.Pun;
 using System;
 using System.IO;
 
-public class PlayerSaveLoad : MonoBehaviourPun
+public class PlayerSaveLoad : MonoBehaviourPun, ISaveable
 {
     public static PlayerSaveLoad instance;
 
-    [SerializeField] private string folderName;
+    [field: SerializeField] 
+    public string folderName { get; private set; }
 
-    private string fileName;
+    [field: SerializeField] 
+    public bool encrypted { get; private set; }
+
+    //[field: SerializeField]
+    public string fileName { get; private set; }
+
+    [field: SerializeField]
+    public bool IsLoadedByManager { get; private set; }
 
     //private string relativePath;
 
-    IDataService saveLoadService = new SaveLoadService();
+    public IDataService saveLoadService { get; private set; }
 
     private void Awake()
     {
@@ -27,6 +35,9 @@ public class PlayerSaveLoad : MonoBehaviourPun
         {
             Destroy(this.gameObject);
         }
+
+        saveLoadService = new SaveLoadService();
+
         if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
         {
             fileName = "TestClient";
@@ -46,21 +57,21 @@ public class PlayerSaveLoad : MonoBehaviourPun
         //fileName = GameManager.instance.PlayerOwner.GetPhotonView().ViewID + ".json";
     }
 
-    public void SavePlayerRPC()
+    public void SaveRPC()
     {
         if(PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
         {
-            SavePlayer(fileName);
+            Save(fileName);
         }
         else
         {
             //SavePlayer(fileName, GameManager.instance.PlayerOwner.GetPhotonView().ViewID);
-            photonView.RPC("SavePlayer", RpcTarget.MasterClient, fileName);
+            photonView.RPC("Save", RpcTarget.MasterClient, fileName);
         }
     }
 
     
-    public void LoadPlayerRPC()
+    public void LoadRPC()
     {
         //string fileName = player.photonView.Owner.NickName;
 
@@ -68,17 +79,17 @@ public class PlayerSaveLoad : MonoBehaviourPun
 
         if (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Joined)
         {
-            LoadPlayer(fileName);
+            Load(fileName);
         }
         else
         {
             //SavePlayer(fileName, GameManager.instance.PlayerOwner.GetPhotonView().ViewID);
-            photonView.RPC("LoadPlayer", RpcTarget.MasterClient, fileName);
+            photonView.RPC("Load", RpcTarget.MasterClient, fileName);
         }
     }
 
     [PunRPC]
-    public void SavePlayer(string playerName)
+    public void Save(string playerName)
     {
         if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && !PhotonNetwork.IsMasterClient) return;
 
@@ -104,7 +115,7 @@ public class PlayerSaveLoad : MonoBehaviourPun
         
         if(player != null)
         {
-            if (!saveLoadService.SaveData(folderName, fileName, GetPlayerData(player), false))
+            if (!saveLoadService.SaveData(folderName, fileName, GetPlayerData(player), encrypted))
             {
                 Debug.LogError("Did not save player due to some issues!");
             }
@@ -120,7 +131,7 @@ public class PlayerSaveLoad : MonoBehaviourPun
     }
 
     [PunRPC]
-    public bool LoadPlayer(string playerName)
+    public bool Load(string playerName)
     {
         if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && !PhotonNetwork.IsMasterClient) return false;
 
@@ -155,7 +166,7 @@ public class PlayerSaveLoad : MonoBehaviourPun
                 string relativePath = "/" + folderName + "/" + playerName + ".json";
 
                 //PlayerData playerData = saveLoadService.LoadData<PlayerData>(relativePath, false);
-                string playerData = saveLoadService.ReadFile(relativePath, false);
+                string playerData = saveLoadService.ReadFile(relativePath, encrypted);
 
                 //Debug.LogError("Loading for player named: " + playerName);
 

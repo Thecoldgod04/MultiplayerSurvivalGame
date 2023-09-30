@@ -12,12 +12,12 @@ public class ZombieIdleState : ZombieNaiveState
     [SerializeField]
     bool enteredState = false;
 
-    public override void DoStateFixedUpdate(ZombieStateMachine stateMachine)
+    public override void DoStateFixedUpdate(SlimeStateMachine stateMachine)
     {
         stateMachine.movementBehavior.ApplyVelocity();
     }
 
-    public override void DoStateUpdate(ZombieStateMachine stateMachine)
+    public override void DoStateUpdate(SlimeStateMachine stateMachine)
     {
         if (PhotonNetwork.IsMasterClient != true && PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
         {

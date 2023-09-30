@@ -29,6 +29,8 @@ public class ConstructionLayer : TilemapLayer
         }
 
         occupiedList = new Dictionary<Vector3Int, BuildableObject>();
+
+        SaveLoadManager.instance.LoadGameRPC();
     }
 
     public UnityEvent onConstructionBuild, onConstructionDestroy;

@@ -51,6 +51,8 @@ public class PlayerChunkTracer : MonoBehaviourPun
 
         previousChunkPosition = GetChunkPosition(player.position);
         LoadChunks(previousChunkPosition);
+
+        UnloadChunks(Vector2.zero, Vector2.zero);
     }
 
     // Update is called once per frame
@@ -83,6 +85,7 @@ public class PlayerChunkTracer : MonoBehaviourPun
         return ChunkManager.instance.GetChunkPosition(position);
     }
 
+    bool isGameStarted = true;
     private void LoadChunks(Vector2 currentChunkPosition)
     {
         chunksAroundPlayer.Clear();
@@ -119,6 +122,11 @@ public class PlayerChunkTracer : MonoBehaviourPun
             }
         }
 
+        if(isGameStarted)
+        {
+            isGameStarted = false;
+        }
+
 
         /*int startX = (int) currentChunkPosition.x - chunkSize;
         int startY = (int) currentChunkPosition.y - chunkSize;
@@ -152,14 +160,17 @@ public class PlayerChunkTracer : MonoBehaviourPun
     {
         bool containsDataObjects = false;
 
-        if ((loadedChunks.ContainsKey(posStart) && loadedChunks[posStart].activeInHierarchy) || 
-            (chunksOfLoadedDataObjects.ContainsKey(posStart) && chunksOfLoadedDataObjects[posStart].activeInHierarchy))
+        if ((loadedChunks.ContainsKey(posStart) && loadedChunks[posStart].activeInHierarchy && !isGameStarted) || 
+            (chunksOfLoadedDataObjects.ContainsKey(posStart) && chunksOfLoadedDataObjects[posStart].activeInHierarchy && !isGameStarted))
         {
             //Debug.LogWarning("Active chunk detected at: " + posStart);
             return;
         }
 
+
         if (posStart.x < 0 || posStart.y < 0) return;
+
+        //Debug.LogError(posStart);
 
         //if ((posStart.x != 10 || posStart.y != 0) && (posStart.x != 0 || posStart.y != 0)) return;    //this line is only for debugging
 
@@ -195,6 +206,7 @@ public class PlayerChunkTracer : MonoBehaviourPun
             {
                 Vector3 pos = new Vector3(x, y);
                 biomeLayer.GenerateBiome(pos);
+
                 GameObject environmentObj = null;
                 if (loadedChunks.ContainsKey(posStart))
                 {

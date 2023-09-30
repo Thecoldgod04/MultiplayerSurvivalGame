@@ -12,12 +12,12 @@ public class ZombieWanderState : IZomebieState
     [SerializeField]
     private bool enteredState = false;
 
-    public void DoStateFixedUpdate(ZombieStateMachine stateMachine)
+    public void DoStateFixedUpdate(SlimeStateMachine stateMachine)
     {
         Wander(stateMachine);
     }
 
-    public void DoStateUpdate(ZombieStateMachine stateMachine)
+    public void DoStateUpdate(SlimeStateMachine stateMachine)
     {
         if (PhotonNetwork.IsMasterClient != true && PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
         {
@@ -39,12 +39,12 @@ public class ZombieWanderState : IZomebieState
         }
     }
 
-    public void ResetState(ZombieStateMachine stateMachine)
+    public void ResetState(SlimeStateMachine stateMachine)
     {
         
     }
 
-    private void UpdateWanderInput(ZombieStateMachine stateMachine)
+    private void UpdateWanderInput(SlimeStateMachine stateMachine)
     {
         stateMachine.movementBehavior.SetMoveInput(stateMachine.wanderMoveInput);
         stateMachine.movementBehavior.moveInput.UpdateInput();
@@ -52,7 +52,7 @@ public class ZombieWanderState : IZomebieState
         stateMachine.GetComponent<Flip>().DoFlipByInput(stateMachine.movementBehavior.moveInput.xInput);
     }
 
-    private void Wander(ZombieStateMachine stateMachine)
+    private void Wander(SlimeStateMachine stateMachine)
     {
         stateMachine.movementBehavior.ApplyVelocity();
     }

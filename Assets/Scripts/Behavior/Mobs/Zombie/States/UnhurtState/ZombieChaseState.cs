@@ -14,12 +14,12 @@ public class ZombieChaseState : ZombieUnhurtState
 
     bool targetLocked = false;
 
-    public override void DoStateFixedUpdate(ZombieStateMachine stateMachine)
+    public override void DoStateFixedUpdate(SlimeStateMachine stateMachine)
     {
         stateMachine.movementBehavior.ApplyVelocity();
     }
 
-    public override void DoStateUpdate(ZombieStateMachine stateMachine)
+    public override void DoStateUpdate(SlimeStateMachine stateMachine)
     {
         base.DoStateUpdate(stateMachine);
 
@@ -56,7 +56,7 @@ public class ZombieChaseState : ZombieUnhurtState
         }
     }
 
-    private Transform FindClosestPlayer(PlayerSetup[] players, ZombieStateMachine stateMachine)
+    private Transform FindClosestPlayer(PlayerSetup[] players, SlimeStateMachine stateMachine)
     {
         Transform closestTransform = null;
         float closestDistance = Mathf.Infinity; // start with max possible distance
@@ -75,7 +75,7 @@ public class ZombieChaseState : ZombieUnhurtState
         return closestTransform;
     }
 
-    public override void ResetState(ZombieStateMachine stateMachine)
+    public override void ResetState(SlimeStateMachine stateMachine)
     {
         giveUpTime = 2f;
 

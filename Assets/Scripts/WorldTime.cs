@@ -21,6 +21,8 @@ public class WorldTime : MonoBehaviourPun
     private double startTime;
     ExitGames.Client.Photon.Hashtable customValue;
 
+    public float latestSavedTime;
+
     public UnityEvent onHourPass;
 
     // Start is called before the first frame update
@@ -74,19 +76,27 @@ public class WorldTime : MonoBehaviourPun
         }
         else
         {
-            currentTime = (float)(PhotonNetwork.Time - startTime);
+            currentTime = (float)(PhotonNetwork.Time - startTime) + latestSavedTime;
         }
     }
 
+    bool startedGame = true;
     private void DoTimeCycleOffline()
     {
         if (currentTime >= cycle)
         {
             //Reset time
-            currentTime = 0;
+            //currentTime = 0;
+            //Debug.LogError("Finished cycle");
+            UpdateCycleTime();
         }
         else
         {
+            if(startedGame)
+            {
+                startedGame = false;
+                currentTime = latestSavedTime;
+            }
             currentTime += Time.deltaTime;
         }
     }
@@ -95,6 +105,11 @@ public class WorldTime : MonoBehaviourPun
     {
         int currentHour = (int) (currentTime / (cycle / 24));
         return currentHour;
+    }
+
+    public void SetCurrentTime(float currentTime)
+    {
+        this.currentTime = currentTime;
     }
 
     public float GetCurrentTime()
@@ -113,5 +128,7 @@ public class WorldTime : MonoBehaviourPun
         startTime = PhotonNetwork.Time;
         currentTime = 0;
         dayPassed++;
+        
+        latestSavedTime = 0;
     }
 }

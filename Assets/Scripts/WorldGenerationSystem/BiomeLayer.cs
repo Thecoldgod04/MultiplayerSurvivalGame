@@ -18,6 +18,7 @@ public class BiomeLayer : TilemapLayer
 
     public void GenerateBiomeBlock(string biome, Vector3 pos)
     {
+        //Debug.LogError(biome);
         TileBase biomeTile = null;
 
         if(biome == sand)

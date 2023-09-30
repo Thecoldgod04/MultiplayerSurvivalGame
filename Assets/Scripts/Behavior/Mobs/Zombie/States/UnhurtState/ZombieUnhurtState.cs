@@ -8,12 +8,12 @@ public class ZombieUnhurtState : IZomebieState
 {
     [SerializeField]
     bool test;
-    public virtual void DoStateFixedUpdate(ZombieStateMachine stateMachine)
+    public virtual void DoStateFixedUpdate(SlimeStateMachine stateMachine)
     {
         throw new System.NotImplementedException();
     }
 
-    public virtual void DoStateUpdate(ZombieStateMachine stateMachine)
+    public virtual void DoStateUpdate(SlimeStateMachine stateMachine)
     {
         if (PhotonNetwork.IsMasterClient != true && PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined)
         {
@@ -28,7 +28,7 @@ public class ZombieUnhurtState : IZomebieState
         }
     }
 
-    public virtual void ResetState(ZombieStateMachine stateMachine)
+    public virtual void ResetState(SlimeStateMachine stateMachine)
     {
         throw new System.NotImplementedException();
     }

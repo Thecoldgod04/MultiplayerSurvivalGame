@@ -33,7 +33,7 @@ public class PlayerSetup : MonoBehaviourPun
 
         if (photonView.ViewID != 0 && !photonView.IsMine) return;
 
-        PlayerSaveLoad.instance.LoadPlayerRPC();
+        PlayerSaveLoad.instance.LoadRPC();
 
         playerCamera.SetActive(true);
         playerCamera.tag = "MainCamera";
@@ -73,6 +73,7 @@ public class PlayerSetup : MonoBehaviourPun
     {
         if (PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joined && !photonView.IsMine) return;
 
+        //Debug.LogError(playerDataJson);
         PlayerData playerData = JsonConvert.DeserializeObject<PlayerData>(playerDataJson);
 
         //Debug.LogError("Loading for player named: " + photonView.Owner.NickName);
